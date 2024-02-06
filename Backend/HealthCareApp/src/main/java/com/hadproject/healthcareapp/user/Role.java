@@ -9,33 +9,49 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.hadproject.healthcareapp.user.Permission.STUDENT_CREATE;
-import static com.hadproject.healthcareapp.user.Permission.STUDENT_DELETE;
-import static com.hadproject.healthcareapp.user.Permission.STUDENT_READ;
-import static com.hadproject.healthcareapp.user.Permission.STUDENT_UPDATE;
-import static com.hadproject.healthcareapp.user.Permission.EMPLOYEE_CREATE;
-import static com.hadproject.healthcareapp.user.Permission.EMPLOYEE_DELETE;
-import static com.hadproject.healthcareapp.user.Permission.EMPLOYEE_READ;
-import static com.hadproject.healthcareapp.user.Permission.EMPLOYEE_UPDATE;
 
 @RequiredArgsConstructor
 public enum Role {
 
   USER(Collections.emptySet()),
-  STUDENT(
+  PATIENT(
           Set.of(
-                  STUDENT_READ,
-                  STUDENT_UPDATE,
-                  STUDENT_DELETE,
-                  STUDENT_CREATE
+                  Permission.PATIENT_READ,
+                  Permission.PATINET_UPDATE,
+                  Permission.PATINET_CREATE,
+                  Permission.PATINET_DELETE
           )
   ),
-  EMPLOYEE(
+  EXPERT(
           Set.of(
-                  EMPLOYEE_READ,
-                  EMPLOYEE_UPDATE,
-                  EMPLOYEE_DELETE,
-                  EMPLOYEE_CREATE
+                  Permission.EXPERT_READ,
+                  Permission.EXPERT_UPDATE,
+                  Permission.EXPERT_CREATE,
+                  Permission.EXPERT_DELETE
+          )
+  ),
+  MODERATOR(
+          Set.of(
+                  Permission.MODERATOR_CREATE,
+                  Permission.MODERATOR_DELETE,
+                  Permission.MODERATOR_UPDATE,
+                  Permission.MODERATOR_READ
+          )
+  ),
+  SENIOR_DOCTOR(
+          Set.of(
+                  Permission.SENIOR_DOCTOR_READ,
+                  Permission.SENIOR_DOCTOR_UPDATE,
+                  Permission.SENIOR_DOCTOR_CREATE,
+                  Permission.SENIOR_DOCTOR_DELETE
+          )
+  ),
+  ADMIN(
+          Set.of(
+                  Permission.ADMIN_CREATE,
+                  Permission.ADMIN_UPDATE,
+                  Permission.ADMIN_DELETE,
+                  Permission.ADMIN_READ
           )
   )
 
@@ -53,3 +69,4 @@ public enum Role {
     return authorities;
   }
 }
+
