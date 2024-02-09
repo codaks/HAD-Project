@@ -20,5 +20,8 @@ public class AuthenticationResponse {
   @JsonProperty("id")
   private int id;
 
+  @JsonProperty("role")
+  private String role;
+
 
 }

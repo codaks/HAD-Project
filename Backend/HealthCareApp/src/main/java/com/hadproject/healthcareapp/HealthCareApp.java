@@ -18,6 +18,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import java.util.Date;
+
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class HealthCareApp {
@@ -52,6 +54,20 @@ public class HealthCareApp {
 				var user1 = RegisterRequest.builder()
 						.email("chitransh.kulshrestha@iiitb.ac.in")
 						.password("1234")
+						.fname("Chitransh")
+						.lname("Kulshrestha")
+						.mname("")
+						.gender("M")
+						.hno("Z/3-12")
+						.Street1("ZSI Housing Complext")
+						.Street2("218 Kaulagarh Road")
+						.Pin_Code(248195)
+						.State_Code(1)
+						.Country_Code(1)
+						.District_code(1)
+						.Mobile("8979197985")
+						.DOB(new Date())
+						.DOR(new Date())
 						.role(Role.ADMIN).build();
 
 

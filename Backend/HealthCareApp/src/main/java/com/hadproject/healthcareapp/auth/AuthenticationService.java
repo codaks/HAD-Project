@@ -5,25 +5,28 @@ import com.hadproject.healthcareapp.token.Token;
 import com.hadproject.healthcareapp.token.TokenRepository;
 import com.hadproject.healthcareapp.token.TokenType;
 import com.hadproject.healthcareapp.user.User;
+import com.hadproject.healthcareapp.user.UserDetail;
 import com.hadproject.healthcareapp.user.UserRepository;
+import com.hadproject.healthcareapp.user.UserDetailRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AuthenticationService {
   private final UserRepository repository;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
+  private final UserDetailRepository userDetailRepository;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
@@ -33,13 +36,39 @@ public class AuthenticationService {
         .password(passwordEncoder.encode(request.getPassword()))
         .role(request.getRole())
         .build();
+
+
     var savedUser = repository.save(user);
+    User user_id = repository.findByEmail(request.getEmail()).orElse(user);
+    System.out.println("*********************************************************************");
+    System.out.println(user_id.getId());
+    System.out.println("*********************************************************************");
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
+    var userDetail = UserDetail.builder()
+            .uid(user_id)
+            .fname(request.getFname())
+            .mname(request.getMname())
+            .lname(request.getLname())
+            .gender(request.getGender())
+            .hno(request.getHno())
+            .Street1(request.getStreet1())
+            .Street2(request.getStreet2())
+            .Pin_Code(request.getPin_Code())
+            .State_Code(request.getState_Code())
+            .Country_Code(request.getCountry_Code())
+            .District_code(request.getDistrict_code())
+            .Mobile(request.getMobile())
+            .DOB(request.getDOB())
+            .DOR(request.getDOR())
+            .build();
+    var detailSaved =userDetailRepository.save(userDetail);
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
+            .id(user_id.getId())
+            .role(request.getRole().toString())
         .build();
   }
 
@@ -61,6 +90,7 @@ public class AuthenticationService {
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
             .id(user.getId())
+            .role(user.getRole().toString())
         .build();
   }
 
