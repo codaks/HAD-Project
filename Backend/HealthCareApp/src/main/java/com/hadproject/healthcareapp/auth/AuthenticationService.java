@@ -40,9 +40,6 @@ public class AuthenticationService {
 
     var savedUser = repository.save(user);
     User user_id = repository.findByEmail(request.getEmail()).orElse(user);
-    System.out.println("*********************************************************************");
-    System.out.println(user_id.getId());
-    System.out.println("*********************************************************************");
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
@@ -56,12 +53,13 @@ public class AuthenticationService {
             .Street1(request.getStreet1())
             .Street2(request.getStreet2())
             .Pin_Code(request.getPin_Code())
-            .State_Code(request.getState_Code())
-            .Country_Code(request.getCountry_Code())
-            .District_code(request.getDistrict_code())
+            .State(request.getState())
+            .City(request.getCity())
+            .Country(request.getCountry())
+            .District(request.getDistrict())
             .Mobile(request.getMobile())
-            .DOB(request.getDOB())
-            .DOR(request.getDOR())
+            .dob(request.getDob())
+            .dor(request.getDor())
             .build();
     var detailSaved =userDetailRepository.save(userDetail);
     return AuthenticationResponse.builder()

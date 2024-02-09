@@ -59,15 +59,16 @@ public class HealthCareApp {
 						.mname("")
 						.gender("M")
 						.hno("Z/3-12")
-						.Street1("ZSI Housing Complext")
+						.Street1("ZSI Housing Complex")
 						.Street2("218 Kaulagarh Road")
 						.Pin_Code(248195)
-						.State_Code(1)
-						.Country_Code(1)
-						.District_code(1)
+						.City("Dehradun")
+						.State("Uttarakhand")
+						.Country("India")
+						.District("1")
 						.Mobile("8979197985")
-						.DOB(new Date())
-						.DOR(new Date())
+						.dob(new Date().toString())
+						.dor(new Date().toString())
 						.role(Role.ADMIN).build();
 
 

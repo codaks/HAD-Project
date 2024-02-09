@@ -26,13 +26,13 @@ public class RegisterRequest {
   private String Street1;
   private String Street2;
   private int Pin_Code;
-  private int City_Code;
-  private int State_Code;
-  private int Country_Code;
-  private int District_code;
+  private String City;
+  private String State;
+  private String Country;
+  private String District;
   private String Mobile;
-  private Date DOB;
-  private Date DOR;
+  private String dob;
+  private String dor;
 
   @Enumerated(EnumType.STRING)
   private Role role;

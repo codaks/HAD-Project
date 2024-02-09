@@ -1,5 +1,6 @@
 package com.hadproject.healthcareapp.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,20 +27,34 @@ public class UserDetail {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id")
     private User uid;
+    @Column(nullable = false)
     private String fname;
+    @Column(nullable = false)
     private String mname;
+    @Column(nullable = false)
     private String lname;
-    private String password;
+    @Column(nullable = false)
     private String gender;
+    @Column(nullable = false)
     private String hno;
+    @Column(nullable = false)
     private String Street1;
+    @Column(nullable = false)
     private String Street2;
+    @Column(nullable = false)
     private int Pin_Code;
-    private int City_Code;
-    private int State_Code;
-    private int Country_Code;
-    private int District_code;
+    @Column(nullable = false)
+    private String City;
+    @Column(nullable = false)
+    private String State;
+    @Column(nullable = false)
+    private String Country;
+    @Column(nullable = false)
+    private String District;
+    @Column(nullable = false,unique = true)
     private String Mobile;
-    private Date DOB;
-    private Date DOR;
+    @Column(nullable = false)
+    private String dob;
+    @Column(nullable = false)
+    private String dor;
 }
