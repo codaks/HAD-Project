@@ -2,7 +2,10 @@ package com.hadproject.healthcareapp.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,8 +13,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
+
 @RequiredArgsConstructor
 public enum Role {
+
 
   USER(Collections.emptySet()),
   PATIENT(
