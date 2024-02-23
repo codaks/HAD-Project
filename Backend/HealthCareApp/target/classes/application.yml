@@ -14,6 +14,12 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: yashswi2401iit@gmail.com
+    password: jdicktsmducbtnyb
+
 application:
   security:
     jwt:
@@ -24,3 +30,6 @@ application:
 
 server:
   port: 8082
+
+  #email properties
+

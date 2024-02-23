@@ -1,11 +1,10 @@
 package com.hadproject.healthcareapp.user;
 
+import com.hadproject.healthcareapp.dto.OtpDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -23,5 +22,14 @@ public class UserController {
     ) {
         service.changePassword(request, connectedUser);
         return ResponseEntity.ok().build();
+    }
+    @PostMapping("/verify-otp")
+     public ResponseEntity<String> otp(@RequestBody OtpDto otpDto ){
+        UserController userService;
+        return new ResponseEntity<>(service.verifyotp(otpDto), HttpStatus.OK);
+    }
+    @PutMapping("/regenerate-otp")
+    public ResponseEntity<String> regenerateOtp(@RequestParam String email) {
+        return new ResponseEntity<>(service.regenerateOtp(email), HttpStatus.OK);
     }
 }
