@@ -24,4 +24,10 @@ public class AdminController {
         int data = adminService.analytics(role);
         return data;
     }
+    //    @GetMapping("/getentries/{role}")
+//    public List<RoleListResponse> authenticateMultiple(@PathVariable Role role)
+//    {
+//        List<RoleListResponse> authResponses = AdminService.processMultipleAuthenticationResponses(authRequests);
+//        return authResponses;
+//    }
 }

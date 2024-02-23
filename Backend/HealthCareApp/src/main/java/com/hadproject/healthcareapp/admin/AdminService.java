@@ -31,4 +31,37 @@ public class AdminService {
         }
         return 0;
     }
+    //    public List<RoleListResponse> processMultipleAuthenticationResponses(List< RoleListResponse> authResponses) {
+//        List< RoleListResponse> processedResponses = new ArrayList<>();
+//
+//        for ( RoleListResponse authResponse : authResponses) {
+//            // Extract necessary data from the authentication response
+//            // For example, assuming user_id, request, jwtToken, and refreshToken are accessible from authResponse
+//
+//            // Create a new UserDetail instance for each response
+//
+//            var userDetail = UserDetail.builder()
+//                    .uid(user_id)
+//                    .fname(request.getFname())
+//                    .gender(request.getGender())
+//                    .Mobile(request.getMobile()
+//                    .build();
+//
+//            // Save the user detail
+//            var detailSaved = userDetailRepository.save(userDetail);
+//
+//            // Construct a new AuthenticationResponse with appropriate data
+////            var processedResponse =  RoleListResponse.builder()
+////                    .accessToken(jwtToken)
+////                    .refreshToken(refreshToken)
+////                    .id(user_id.getId())
+////                    .role(request.getRole().toString())
+////                    .build();
+//
+//            // Add the processed response to the list
+//            processedResponses.add(processedResponse);
+//        }
+//
+//        return processedResponses;
+//    }
 }
