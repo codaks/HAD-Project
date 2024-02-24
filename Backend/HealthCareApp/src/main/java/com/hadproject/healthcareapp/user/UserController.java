@@ -23,13 +23,22 @@ public class UserController {
         service.changePassword(request, connectedUser);
         return ResponseEntity.ok().build();
     }
-    @PostMapping("/verify-otp")
+    @PostMapping("/send-otp")
      public ResponseEntity<String> otp(@RequestBody OtpDto otpDto ){
         UserController userService;
-        return new ResponseEntity<>(service.verifyotp(otpDto), HttpStatus.OK);
+        return new ResponseEntity<>(service.sendotp(otpDto), HttpStatus.OK);
+    }
+    @GetMapping("/verifyuseraccount")
+    public ResponseEntity<String >verifyAccount(@RequestParam String email,@RequestParam String otp){
+        System.out.println("****************************************");
+        System.out.println("Inside Controller");
+        System.out.println("****************************************");
+        return new ResponseEntity<>(service.verifyAccount(email,otp),HttpStatus.OK);
     }
     @PutMapping("/regenerate-otp")
     public ResponseEntity<String> regenerateOtp(@RequestParam String email) {
         return new ResponseEntity<>(service.regenerateOtp(email), HttpStatus.OK);
     }
+
+
 }
