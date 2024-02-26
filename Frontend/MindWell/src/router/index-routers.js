@@ -73,14 +73,18 @@ import EChartPage from "../views/modules/charts/eChart";
 import AmCharts from "../views/modules/charts/amChart";
 import ChartJsPage from "../views/modules/charts/chartJs";
 import PrivacySetting from "../views/modules/extra-pages/privacy-setting";
+import { Navigate } from "react-router-dom";
 export const IndexRouters = [
     {
         path: '',
+        element : <Navigate to="/sign-in" />,
+
+        path: 'home',
         element : <DefaultLayout />,
         children : [
             
             {
-                path: '',
+                path: 'home',
                 element : <Index />,
             },
             {
@@ -100,214 +104,214 @@ export const IndexRouters = [
                 element:<DashboardFour/>
             },
             {
-                path:'/all-doctors',
+                path:'all-doctors',
                 element:<AllDoctors/>
             },
             {
-                path:'/add-doctors',
+                path:'add-doctors',
                 element:<AddDoctors/>
             },
             {
-                path:'/doctors-profile',
+                path:'doctors-profile',
                 element:<DoctorProfile/>
             },
             {
-                path:'/edit-doctors',
+                path:'edit-doctors',
                 element:<EditDoctors/>
             },
             {
-                path:'/calendar',
+                path:'calendar',
                 element:<Calendar/>
             },
             {
-                path:'/chat',
+                path:'chat',
                 element:<Chat/>
             },
             {
-                path:'/ui-colors',
+                path:'ui-colors',
                 element:<UiColors/>
             },
             {
-                path:'/ui-typography',
+                path:'ui-typography',
                 element:<UiTypography/>
             },
             {
-                path:'/ui-alerts',
+                path:'ui-alerts',
                 element:<UiAlerts/>
             },
             {
-                path:'/ui-badges',
+                path:'ui-badges',
                 element:<UiBadges/>
             },
             {
-                path:'/ui-breadcrumb',
+                path:'ui-breadcrumb',
                 element:<UiBreadcrumb/>
             },
             {
-                path:'/ui-button',
+                path:'ui-button',
                 element:<UiButton/>
             },
             {
-                path:'/ui-cards',
+                path:'ui-cards',
                 element:<UiCards/>
             },
             {
-                path:'/ui-carousel',
+                path:'ui-carousel',
                 element:<UiCarousel/>
             },
             {
-                path:'/ui-video',
+                path:'ui-video',
                 element:<UiVideo/>
             },
             {
-                path:'/ui-grid',
+                path:'ui-grid',
                 element:<UiGrid/>
             },
             {
-                path:'/ui-image',
+                path:'ui-image',
                 element:<UiImage/>
             },
             {
-                path:'/ui-list-group',
+                path:'ui-list-group',
                 element:<UiListGroup/>
             },
             {
-                path:'/ui-media',
+                path:'ui-media',
                 element:<UiMedia/>
             },
             {
-                path:'/ui-modal',
+                path:'ui-modal',
                 element:<UiModal/>
             },
             {
-                path:'/ui-notifications',
+                path:'ui-notifications',
                 element:<UiNotifications/>
             },
             {
-                path:'/ui-paginations',
+                path:'ui-paginations',
                 element:<UiPaginations/>    
             },
             {
-                path:'/ui-popovers',
+                path:'ui-popovers',
                 element:<UiPopovers/>
             },
             {
-                path:'/ui-progressbar',
+                path:'ui-progressbar',
                 element:<UiProgressbar/>
             },
             {
-                path:'/ui-tabs',
+                path:'ui-tabs',
                 element:<UiTabs />
             },
             {
-                path:'/ui-tooltips',
+                path:'ui-tooltips',
                 element:<UiTooltips/>
             },
             // Forms
             {
-                path:'/form-elements',
+                path:'form-elements',
                 element:<FormElements/>
             },
             {
-                path:'/form-validation',
+                path:'form-validation',
                 element:<FormValidation/>
             },
             {
-                path:'/form-switch',
+                path:'form-switch',
                 element:<FormSwitch/>
             },
             {
-                path:'/form-Checkbox',
+                path:'form-Checkbox',
                 element:<FormCheckbox/>
             },
             {
-                path:'/form-radio',
+                path:'form-radio',
                 element:<FormRadio/>
             },
             // Form Wizard
             {
-                path:'/simple-wizard',
+                path:'simple-wizard',
                 element:<SimpleWizard/>
             },
             {
-                path:'/validate-wizard',
+                path:'validate-wizard',
                 element:<ValidateWizard/>
             },
             {
-                path:'/vertical-wizard',
+                path:'vertical-wizard',
                 element:<VerticalWizard/>
             },
             // Table
             {
-                path:'/basic-table',
+                path:'basic-table',
                 element:<BasicTable/>
             },
             {
-                path:'/data-table',
+                path:'data-table',
                 element:<DataTable/>
             },
             {
-                path:'/editable-table',
+                path:'editable-table',
                 element:<EditableTable/>
             },
             // Extra Pages
             {
-                path:'/timeline',
+                path:'timeline',
                 element:<Timeline/>
             },
             {
-                path:'/invoice',
+                path:'invoice',
                 element:<Invoice/>
             },
             {
-                path:'/blank-page',
+                path:'blank-page',
                 element:<BlankPage/>
             },
             {
-                path:'/pricing',
+                path:'pricing',
                 element:<Pricing/>
             },
             {
-                path:'/pricing-1',
+                path:'pricing-1',
                 element:<PricingOne/>
             },
             {
-                path:'/faq',
+                path:'faq',
                 element:<Faq/>
             },
             {
-                path:'/account-setting',
+                path:'account-setting',
                 element:<AccountSetting/>
             },
             {
-                path:'/privacy-setting',
+                path:'privacy-setting',
                 element:<PrivacySetting/>
             },
             // Maps
             {
-                path:'/google-map',
+                path:'google-map',
                 element:<Google/>
             },
             {
-                path:'/vector-map',
+                path:'vector-map',
                 element:<VectorMap/>
             },
             // Charts
             {
-                path:'/chartjs',
+                path:'chartjs',
                 element:<ChartJsPage/>
             },
             
             {
-                path:'/e-chart',
+                path:'e-chart',
                 element:<EChartPage/>
             },
             {
-                path:'/am-chart',
+                path:'am-chart',
                 element:<AmCharts/>
             },
             {
-                path:'/apex-chart',
+                path:'apex-chart',
                 element:<ApexChartPage/>
             },
             // Icons
@@ -316,19 +320,19 @@ export const IndexRouters = [
                 element:<Dripicons/>
             },
             {
-                path:'/font-awesome',
+                path:'font-awesome',
                 element:<FontAwesomeIcons/>
             },
             {
-                path:'/line-awesome',
+                path:'line-awesome',
                 element:<LineAwesomeIcons/>
             },
             {
-                path:'/remixicon',
+                path:'remixicon',
                 element:<RemixIconPage/>
             },
             {
-                path:'/unicons',
+                path:'unicons',
                 element:<UnIconsPage/>
             },
             

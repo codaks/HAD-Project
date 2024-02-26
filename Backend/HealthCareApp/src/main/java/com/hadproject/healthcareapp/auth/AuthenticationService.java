@@ -61,7 +61,13 @@ public class AuthenticationService {
             .dob(request.getDob())
             .dor(request.getDor())
             .build();
-    var detailSaved =userDetailRepository.save(userDetail);
+    try {
+      var detailSaved = userDetailRepository.save(userDetail);
+    }
+    catch (Exception e){
+//      repository.delete(user_id);
+      System.out.println(e+"");
+    }
     return AuthenticationResponse.builder()
         .accessToken(jwtToken)
             .refreshToken(refreshToken)
