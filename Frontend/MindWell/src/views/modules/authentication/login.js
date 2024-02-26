@@ -11,11 +11,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-// Image
-import logo from "../../../assets/images/logo-white.png"
 import img from "../../../assets/images/login/4.png"
-import img1 from "../../../assets/images/login/2.png"
-import img2 from "../../../assets/images/login/3.png"
 import my_logo from "../../../assets/images/custome-logo.png"
 
 const LoginPage = () => {
@@ -40,10 +36,10 @@ const LoginPage = () => {
             localStorage.setItem('id', token.id);
             localStorage.setItem('access_token', token.access_token);
             console.log("login Sucessful");
-            
+            navigate('/home');
             // Redirect or perform actions upon successful login
           } catch (error) {
-            
+            setAlert("Username or Password is Incorrect")
             console.error('Login failed:', error);
           }
     };

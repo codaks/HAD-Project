@@ -1,249 +1,301 @@
-import React, { Fragment } from 'react'
-import { Button, Col, Container, Form, Row, FormGroup , FormLabel, FormControl} from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
+
+const Register = () => {
+  const [patientId, setPatientId] = useState('');
+  const [username, setUserName] = useState('');
+  const [firstname, setFirstName] = useState('');
+  const [middleName, setMiddleName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [gender, setGender] = useState('');
+  const [houseNumber, setHouseNumber] = useState('');
+  const [street1, setStreet1] = useState('');
+  const [street2, setStreet2] = useState('');
+  const [pincode, setPincode] = useState('');
+  const [cityCode, setCityCode] = useState('');
+  const [stateCode, setStateCode] = useState('');
+  const [districtCode, setDistrictCode] = useState('');
+  const [countryCode, setCountryCode] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [dob, setDob] = useState('');
+  const [error, setError] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [country, setCountry] = useState('');
+  const [state, setState] = useState('');
 
 
-// Image
-import logo from "../../../assets/images/logo-white.png"
-import img1 from "../../../assets/images/login/1.png"
-import img2 from "../../../assets/images/login/2.png"
-import img3 from "../../../assets/images/login/3.png"
 
-// Swiper
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination } from 'swiper/modules'
-// Swiper css
-import 'swiper/css'
-import 'swiper/css/pagination'
+  const handleRegister = () => {
+    if (!patientId || !firstname || !gender || !mobileNumber || !dob) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+
+    const userData = {
+      username,
+      patientId,
+      firstname,
+      middleName,
+      lastName,
+      gender,
+      houseNumber,
+      street1,
+      street2,
+      pincode,
+      cityCode,
+      stateCode,
+      districtCode,
+      countryCode,
+      mobileNumber,
+      dob,
+    };
+
+    console.log('User Data:', userData);
+
+    setPatientId('');
+    setFirstName('');
+    setMiddleName('');
+    setLastName('');
+    setGender('');
+    setHouseNumber('');
+    setStreet1('');
+    setStreet2('');
+    setPincode('');
+    setCityCode('');
+    setStateCode('');
+    setDistrictCode('');
+    setCountryCode('');
+    setMobileNumber('');
+    setDob('');
+
+    setError('');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8082/api/v1/auth/register', {
+        "fname": firstname,
+        "mname": middleName,
+        "lname": lastName,
+        "email": username,
+        "password": password,
+        "gender": gender,
+        "hno": houseNumber,
+        "street1": street1,
+        "street2": street2,
+        "pin_code": pincode,
+        "city": cityCode,
+        "state": stateCode,
+        "country": countryCode,
+        "district": districtCode,
+        "mobile": mobileNumber,
+        "dob": dob,
+        "dor": "2024-02-09 20:57:16.335000",
+        "role": "ADMIN"
+      });
+
+      const token = response.data;
+      console.log(token)
+    }
+    catch (error) {
+      console.error('Registration failed:', error);
+    }
+  }
+
+  return (
+    <Container className="mt-5">
+      <Row className="justify-content-center">
+        <Col xs={12} sm={10} md={8} lg={10}>
+          <h2 className="text-center">Register</h2>
+          <Form onSubmit={handleSubmit}>
+            <Row>
+              <Col xs={12} md={4}>
+                <Form.Group controlId="firstname">
+                  <Form.Label>First Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={firstname}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="Enter First Name"
+                  />
+                </Form.Group>
 
 
-const RegisterPage = () => {
-    return (
-        <Fragment>
-            {/* <section className="sign-in-page">
-                <Container className='sign-in-page-bg mt-5 mb-md-5 mb-0 p-0'>
-                    <Row className="no-gutters">
-                        <Col md='6' className="text-center">
-                            <div className="sign-in-detail text-white">
-                                <Link className="sign-in-logo mb-5" to="/"><img src={logo} className="img-fluid" alt="logo" /></Link>
-                                <Swiper className="owl-carousel" loop={true} autoplay={true} spaceBetween={30} modules={[Pagination, Autoplay]}>
-                                    <SwiperSlide className="item">
-                                        <img src={img1} className="img-fluid mb-4" alt="logo" />
-                                        <h4 className="mb-1 text-white">Manage your orders</h4>
-                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
-                                    </SwiperSlide>
-                                    <SwiperSlide className="item">
-                                        <img src={img2} className="img-fluid mb-4" alt="logo" />
-                                        <h4 className="mb-1 text-white">Manage your orders</h4>
-                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
-                                    </SwiperSlide>
-                                    <SwiperSlide className="item">
-                                        <img src={img3} className="img-fluid mb-4" alt="logo" />
-                                        <h4 className="mb-1 text-white">Manage your orders</h4>
-                                        <p>It is a long established fact that a reader will be distracted by the readable content.</p>
-                                    </SwiperSlide>
-                                </Swiper>
-                            </div>
-                        </Col>
-                        <Col md='6' className="position-relative">
-                            <div className="sign-in-from">
-                                <h1 className="mb-0">Sign Up</h1>
-                                <Form className="mt-4">
-                                    <Form.Group className='form-group'>
-                                        <Form.Label htmlFor="exampleInputEmail1" className="my-2">Your Full Name</Form.Label>
-                                        <Form.Control type="email" className="form-control mb-0" id="exampleInputEmail1" placeholder="Your Full Name" />
-                                    </Form.Group>
-                                    <Form.Group className='form-group'>
-                                        <Form.Label htmlFor="exampleInputEmail2" className="my-2">Email address</Form.Label>
-                                        <Form.Control type="email" className="form-control mb-0" id="exampleInputEmail2" placeholder="Enter email" />
-                                    </Form.Group>
-                                    <Form.Group className='form-group'>
-                                        <Form.Label htmlFor="exampleInputPassword1" className="my-2">Password</Form.Label>
-                                        <Form.Control type="password" className="form-control mb-0" id="exampleInputPassword1" placeholder="Password" />
-                                    </Form.Group>
-                                    <div className="d-flex justify-content-between w-100 align-items-center mt-2">
-                                        <div className="custom-control custom-checkbox d-inline-block mt-2 pt-1">
-                                            <Form.Check.Input type="checkbox" className="custom-control-input" id="customCheck1" />
-                                            <Form.Label className="custom-control-label" htmlFor="customCheck1">I accept <Link to="#">Terms and Conditions</Link></Form.Label>
-                                        </div>
-                                        <Button variant='primary' type="submit" className="btn btn-primary float-end">Sign Up</Button>
-                                    </div>
-                                    <div className="sign-info">
-                                        <span className="dark-color d-inline-block line-height-2">Already Have Account ? <Link to="/sign-in">Log In</Link></span>
-                                        <ul className="iq-social-media">
-                                            <li><Link to="#"><i className="ri-facebook-box-line"></i></Link></li>
-                                            <li><Link to="#"><i className="ri-twitter-line"></i></Link></li>
-                                            <li><Link to="#"><i className="ri-instagram-line"></i></Link></li>
-                                        </ul>
-                                    </div>
-                                </Form>
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
-            </section> */}
+                <Form.Group controlId="email">
+                  <Form.Label>Email:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={username}
+                    placeholder="Enter Email"
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                </Form.Group>
 
-            <div className="iq-card mt-5 mb-md-5 mb-0 p-0 mx-5">
-              <div className="iq-card-header d-flex justify-content-between">
-                <div className="iq-header-title">
-                  <h4 className="card-title">Input</h4>
-                </div>
-              </div>
-              <div className="iq-card-body">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
-                  vulputate, ex ac venenatis mollis, diam nibh finibus leo
-                </p>
-                <div className='row'>
-                    <div className="col-6">
-                        <h1>Hello Text</h1>
-                    </div>
-                    <div className="col-6">
-                        <h1>Hello Text</h1>
-                    </div>
-                </div>
-                <Form>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputText1">
-                      Input Text{" "}
-                    </FormLabel>
-                    <FormControl
-                      className="form-control my-2"
-                      id="exampleInputText1"
-                      defaultValue="Mark Jets"
-                      placeholder="Enter Name"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputEmail3">
-                      Email Input
-                    </FormLabel>
-                    <FormControl
-                      type="email"
-                      className="form-control my-2"
-                      id="exampleInputEmail3"
-                      defaultValue="markJets@gmail.com"
-                      placeholder="Enter Email"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputurl">Url Input</FormLabel>
-                    <FormControl
-                      type="url"
-                      className="form-control my-2"
-                      id="exampleInputurl"
-                      defaultValue="https://getbootstrap.com"
-                      placeholder="Enter Url"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputphone">
-                      Teliphone Input
-                    </FormLabel>
-                    <FormControl
-                      type="tel"
-                      className="form-control my-2"
-                      id="exampleInputphone"
-                      defaultValue="1-(555)-555-5555"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputNumber1">
-                      Number Input
-                    </FormLabel>
-                    <FormControl
-                      type="number"
-                      className="form-control my-2"
-                      id="exampleInputNumber1"
-                      defaultValue="2356"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputPassword3">
-                      Password Input
-                    </FormLabel>
-                    <FormControl
-                      type="password"
-                      className="form-control my-2"
-                      id="exampleInputPassword3"
-                      defaultValue="markJets123"
-                      placeholder="Enter Password"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputdate">Date Input</FormLabel>
-                    <FormControl
-                      type="date"
-                      className="form-control my-2"
-                      id="exampleInputdate"
-                      defaultValue="2019-12-18"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputmonth">
-                      Month Input
-                    </FormLabel>
-                    <FormControl
-                      type="month"
-                      className="form-control my-2"
-                      id="exampleInputmonth"
-                      defaultValue="2019-12"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputweek">Week Input</FormLabel>
-                    <FormControl
-                      type="week"
-                      className="form-control my-2"
-                      id="exampleInputweek"
-                      defaultValue="2019-W46"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputtime">Time Input</FormLabel>
-                    <FormControl
-                      type="time"
-                      className="form-control my-2"
-                      id="exampleInputtime"
-                      defaultValue="13:45"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleInputdatetime">
-                      Date and Time Input
-                    </FormLabel>
-                    <FormControl
-                      type="datetime-local"
-                      className="form-control my-2"
-                      id="exampleInputdatetime"
-                      defaultValue="2019-12-19T13:45:00"
-                    />
-                  </FormGroup>
-                  <FormGroup className="form-group">
-                    <FormLabel className="mb-0" htmlFor="exampleFormControlTextarea1">
-                      Example textarea
-                    </FormLabel>
-                    <textarea
-                      className="form-control my-2"
-                      id="exampleFormControlTextarea1"
-                      rows="5"
-                    ></textarea>
-                  </FormGroup>
-                  <Button type="submit" className="btn btn-primary me-1 mt-2">
-                    Submit
-                  </Button>
-                  <Button
-                    type="submit"
-                    variant=""
-                    className="btn iq-bg-danger mt-2"
+
+                <Form.Group controlId="gender">
+                  <Form.Label>Gender:</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
                   >
-                    cancel
-                  </Button>
-                </Form>
-              </div>
-            </div>
-        </Fragment>
-    )
-}
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </Form.Control>
+                </Form.Group>
 
-export default RegisterPage
+                <Form.Group controlId="houseNumber">
+                  <Form.Label>House Number:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={houseNumber}
+                    placeholder="Enter House Number"
+                    onChange={(e) => setHouseNumber(e.target.value)}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="mobileNumber">
+                  <Form.Label>Mobile Number:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
+                    placeholder="Enter Mobile Number" />
+                </Form.Group>
+
+                
+              </Col>
+
+              <Col xs={12} md={4}>
+
+                <Form.Group controlId="middleName">
+                  <Form.Label>Middle Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={middleName}
+                    onChange={(e) => setMiddleName(e.target.value)}
+                    placeholder="Enter Middle Name"
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="password">
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={password}
+                    placeholder="Enter Password"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Form.Group>
+
+
+
+
+                <Form.Group controlId="dob">
+                  <Form.Label>Date of Birth:</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={dob}
+                    onChange={(e) => setDob(e.target.value)}
+                  />
+                </Form.Group>
+
+
+                <Form.Group controlId="street1">
+                  <Form.Label>Street 1:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={street1}
+                    placeholder="Enter Street 1"
+                    onChange={(e) => setStreet1(e.target.value)}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="state">
+                  <Form.Label>State:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={state}
+                    placeholder="Enter State"
+                    onChange={(e) => setState(e.target.value)}
+                  />
+                </Form.Group>
+
+              </Col>
+
+              <Col xs={12} md={4}>
+
+                <Form.Group controlId="lastName">
+                  <Form.Label>Last Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Enter Last Name"
+                  />
+                </Form.Group>
+
+
+                <Form.Group controlId="confirmPassword">
+                  <Form.Label>Confirm Password:</Form.Label>
+                  <Form.Control
+                    type="password"
+                    value={confirmPassword}
+                    placeholder="Confirm Password"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="pincode">
+                  <Form.Label>Pincode:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={pincode}
+                    onChange={(e) => setPincode(e.target.value)}
+                    placeholder="Enter Pincode"
+                  />
+                </Form.Group>
+
+
+
+                
+                <Form.Group controlId="street2">
+                  <Form.Label>Street 2:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={street2}
+                    placeholder="Enter Street 2"
+                    onChange={(e) => setStreet2(e.target.value)}
+                  />
+                </Form.Group>
+
+                <Form.Group controlId="country">
+                  <Form.Label>Country:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={country}
+                    placeholder="Enter Country"
+                    onChange={(e) => setCountry(e.target.value)}
+                  />
+                </Form.Group>
+
+                
+              </Col>
+            </Row>
+
+            <Button type="submit" className="btn btn-primary float-end" style={{ marginTop: '10px' }}>Register</Button>
+          </Form>
+
+          {error && <p style={{ color: 'red' }} className="mt-3">{error}</p>}
+        </Col>
+      </Row>
+    </Container>
+  );
+};
+
+export default Register;
