@@ -9,8 +9,6 @@ import 'swiper/css/pagination';
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-
 import img from "../../../assets/images/login/4.png"
 import my_logo from "../../../assets/images/custome-logo.png"
 
@@ -36,7 +34,7 @@ const LoginPage = () => {
             localStorage.setItem('id', token.id);
             localStorage.setItem('access_token', token.access_token);
             console.log("login Sucessful");
-            navigate('/home');
+            navigate('/home/home');
             // Redirect or perform actions upon successful login
           } catch (error) {
             setAlert("Username or Password is Incorrect")

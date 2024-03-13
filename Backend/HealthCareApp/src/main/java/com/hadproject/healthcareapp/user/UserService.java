@@ -51,10 +51,9 @@ public class UserService {
         } catch (MessagingException e) {
             throw new RuntimeException("Unable to send otp please try again");
         }
-        User user = new User();
-       // user.setName(registerDto.getName());
-        user.setEmail(otpDto.getEmail());
-        user.setPassword(otpDto.getPassword());
+        User user = repository.findByEmail(otpDto.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found with this email: " + otpDto.getEmail()));
+
         user.setOtp(otp);
         user.setOtpGeneratedTime(LocalDateTime.now());
         repository.save(user);
