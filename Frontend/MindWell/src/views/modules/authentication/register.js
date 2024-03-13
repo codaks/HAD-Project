@@ -47,7 +47,6 @@ const Register = () => {
   const handleChangeInUserDetails = (e) => {
 
     const { name, value } = e.target;
-    console.log(userDetail);
     setUserDetail({
       ...userDetail,
       [name]: value
