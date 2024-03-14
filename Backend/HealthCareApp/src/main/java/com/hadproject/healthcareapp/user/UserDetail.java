@@ -51,7 +51,7 @@ public class UserDetail {
     private String Country;
     @Column(nullable = false)
     private String District;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String Mobile;
     @Column(nullable = false)
     private String dob;
