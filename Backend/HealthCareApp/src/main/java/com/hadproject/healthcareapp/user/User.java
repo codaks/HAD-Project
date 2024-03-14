@@ -2,15 +2,16 @@ package com.hadproject.healthcareapp.user;
 
 import com.hadproject.healthcareapp.token.Token;
 import jakarta.persistence.*;
-
-import java.util.Collection;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,6 +24,7 @@ public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
+  @Column(unique = true, nullable = false)
   private String email;
   private String password;
 
@@ -32,7 +34,9 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
 
-
+  private boolean active;
+  private String otp;
+  private LocalDateTime otpGeneratedTime;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {

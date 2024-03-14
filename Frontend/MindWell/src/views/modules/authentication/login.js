@@ -9,13 +9,7 @@ import 'swiper/css/pagination';
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-
-// Image
-import logo from "../../../assets/images/logo-white.png"
 import img from "../../../assets/images/login/4.png"
-import img1 from "../../../assets/images/login/2.png"
-import img2 from "../../../assets/images/login/3.png"
 import my_logo from "../../../assets/images/custome-logo.png"
 
 const LoginPage = () => {
@@ -23,29 +17,70 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [alert,setAlert] = useState('');
 
+    const [errors, setErrors] = useState({});
+    const [loginDetails, setLoginDetails] = useState({
+        email: '',
+        password: ''
+    });
+
+    const validateForm = (data) => {
+        const errors = {};
+        if (!data.email.trim()) {
+          errors.email = 'Email is required';
+        }
+
+        if (!data.password.trim()) {
+            errors.password = 'Password is required';
+        }
+        return errors;
+    }
+    const handleChangeInLoginDetails = (e) => {
+
+        const { name, value } = e.target;
+        console.log("INput: ",name,value);
+        setLoginDetails({
+          ...loginDetails,
+          [name]: value
+        });
+
+      };
+
+
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            console.log(email, password);
-            const response = await axios.post('http://localhost:8082/api/v1/auth/authenticate', {
-                "email" :email,
-                "password": password
-            });
-            const token = response.data;
-            console.log(token)
-            // Store token in local storage (not secure, consider better methods)
-      
-            localStorage.setItem('id', token.id);
-            localStorage.setItem('access_token', token.access_token);
-            console.log("login Sucessful");
+        const validationErrors = validateForm(loginDetails);
+        if (Object.keys(validationErrors).length === 0) {
+            try {
+                console.log(email, password);
             
-            // Redirect or perform actions upon successful login
-          } catch (error) {
-            
-            console.error('Login failed:', error);
-          }
+                const response = await axios({
+                    method: 'post',
+                    url: `http://localhost:8082/api/v1/auth/authenticate`,
+                    data: loginDetails,
+                  });
+                
+                const token = response.data;
+                console.log(token)
+                // Store token in local storage (not secure, consider better methods)
+          
+                localStorage.setItem('id', token.id);
+                localStorage.setItem('access_token', token.access_token);
+                console.log("login Sucessful");
+                navigate('/home/home');
+                // Redirect or perform actions upon successful login
+              } catch (error) {
+                setAlert("Username or Password is Incorrect")
+                console.error('Login failed:', error);
+              }
+        }
+        else{
+            console.log("Validataion Failed")
+            setErrors(validationErrors);
+        }
+
+        
     };
 
 
@@ -72,26 +107,34 @@ const LoginPage = () => {
                                     <Form.Group className='form-group'>
                                         <Form.Label htmlFor="exampleInputEmail1" className="mb-2">Email address</Form.Label>
                                         <Form.Control
+                                            name="email"
                                             type="email"
                                             className="form-control mb-0"
                                             id="exampleInputEmail1"
                                             placeholder="Enter email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
+                                            value={loginDetails.email}
+                                            onChange={handleChangeInLoginDetails}
+                                            isInvalid={!!errors.email}
                                         />
+                                        <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                                     </Form.Group>
+
                                     <div className="d-flex justify-content-between my-2">
                                         <Form.Label htmlFor="exampleInputPassword1" className='mb-0'>Password</Form.Label>
                                         <Link to="/recover-password" className="float-end">Forgot password?</Link>
                                     </div>
+
                                     <Form.Control
+                                        name="password"
                                         type="password"
                                         className="form-control mb-0"
                                         id="exampleInputPassword1"
-                                        placeholder="Password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="Password"s
+                                        value={loginDetails.password}
+                                        isInvalid={!!errors.password}
+                                        onChange={handleChangeInLoginDetails}
                                     />
+                                    <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                                     <div className="d-flex w-100 justify-content-between align-items-center mt-3 w-100">
                                         <div className="custom-control custom-checkbox d-inline-block mt-2 pt-1">
                                             <Form.Check.Input

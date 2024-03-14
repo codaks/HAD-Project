@@ -19,6 +19,9 @@ public class AuthenticationController {
   public ResponseEntity<AuthenticationResponse> register(
       @RequestBody RegisterRequest request
   ) {
+    System.out.println("*************************  USER DETAILS  *******************************");
+    System.out.println("username: "+request.getEmail());
+    System.out.println("*************************  USER DETAILS  *******************************");
     return ResponseEntity.ok(service.register(request));
   }
 
