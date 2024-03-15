@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Service
@@ -44,7 +45,7 @@ public class UserService {
         repository.save(user);
     }
 
-    public String verifyotp(OtpDto otpDto) {
+    public String sendotp(OtpDto otpDto) {
         String otp = otpUtil.generateOtp();
         try {
             emailUtil.sendOtpEmail(otpDto.getEmail(), otp);
@@ -54,14 +55,42 @@ public class UserService {
         User user = repository.findByEmail(otpDto.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found with this email: " + otpDto.getEmail()));
 
+        // user.setName(registerDto.getName());
+
         user.setOtp(otp);
         user.setOtpGeneratedTime(LocalDateTime.now());
         repository.save(user);
-        System.out.println("**********************OTP**************************");
-        System.out.println(otp);
-        System.out.println("**********************OTP**************************");
-        return otp;
+//        System.out.println("**********************OTP**************************");
+//        System.out.println(otp);
+//        System.out.println("**********************OTP**************************");
+        return "Send Otp successfully";
+
     }
+    public String verifyAccount(String email, String otp) {
+        System.out.println("****************************************");
+        System.out.println("Inside Service");
+        System.out.println("****************************************");
+        User user = repository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with this email: " + email));
+
+        System.out.println("****************************************");
+        System.out.println("Get the User");
+        System.out.println("****************************************");
+
+        if (user.getOtp().equals(otp) && Duration.between(user.getOtpGeneratedTime(),
+                LocalDateTime.now()).getSeconds() < (2 * 60)) {
+            user.setActive(true);
+            System.out.println("****************************************");
+            System.out.println("Before Saving");
+            System.out.println("****************************************");
+            repository.save(user);
+
+            return "OTP verified successfully ";
+        }
+        return "Please regenerate otp and try again";
+    }
+
+
 
     public String regenerateOtp(String email) {
         User user = repository.findByEmail(email)
@@ -77,4 +106,6 @@ public class UserService {
         repository.save(user);
         return "Email sent... please verify account within 1 minute";
     }
+
+
 }

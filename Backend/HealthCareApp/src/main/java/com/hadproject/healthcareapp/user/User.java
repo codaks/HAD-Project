@@ -34,7 +34,7 @@ public class User implements UserDetails {
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
 
-  private boolean active;
+  private boolean active = false;
   private String otp;
   private LocalDateTime otpGeneratedTime;
 
