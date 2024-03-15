@@ -47,6 +47,7 @@ public class UserService {
 
     public String sendotp(OtpDto otpDto) {
         String otp = otpUtil.generateOtp();
+        System.out.println("************************I got the email as "+otpDto.getEmail());
         try {
             emailUtil.sendOtpEmail(otpDto.getEmail(), otp);
         } catch (MessagingException e) {
@@ -60,9 +61,7 @@ public class UserService {
         user.setOtp(otp);
         user.setOtpGeneratedTime(LocalDateTime.now());
         repository.save(user);
-//        System.out.println("**********************OTP**************************");
-//        System.out.println(otp);
-//        System.out.println("**********************OTP**************************");
+
         return "Send Otp successfully";
 
     }

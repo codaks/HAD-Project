@@ -28,12 +28,12 @@ public class UserController {
         UserController userService;
         return new ResponseEntity<>(service.sendotp(otpDto), HttpStatus.OK);
     }
-    @GetMapping("/verifyuseraccount")
-    public ResponseEntity<String >verifyAccount(@RequestParam String email,@RequestParam String otp){
+    @PostMapping("/verifyuseraccount")
+    public ResponseEntity<String> verifyAccount(@RequestBody OTPVerificationRequest request) {
         System.out.println("****************************************");
         System.out.println("Inside Controller");
         System.out.println("****************************************");
-        return new ResponseEntity<>(service.verifyAccount(email,otp),HttpStatus.OK);
+        return new ResponseEntity<>(service.verifyAccount(request.getEmail(), request.getOtp()), HttpStatus.OK);
     }
     @PutMapping("/regenerate-otp")
     public ResponseEntity<String> regenerateOtp(@RequestParam String email) {

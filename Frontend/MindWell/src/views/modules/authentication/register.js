@@ -160,6 +160,7 @@ const Register = () => {
           console.log(token);
           localStorage.setItem('id', token.id);
           localStorage.setItem('access_token', token.access_token);
+          localStorage.setItem('username', userDetail.email);
           setOTPDetials({
             ...otpDetails,
             email: userDetail.email
@@ -172,9 +173,10 @@ const Register = () => {
             Authorization: `Bearer ${accessToken}`,
           };
           console.log("Now Sending OTP: ",headers);
-          axiosInstance.post('/users/verify-otp',otpDetails, { headers: headers})
+          axiosInstance.post('/users/send-otp',{email: userDetail.email}, { headers: headers})
             .then((response) => {
               console.log(response.data);
+              navigate('/confirm-mail');
             })
             .catch((error) => {
               console.log("This Errors is in Sending OTP");
