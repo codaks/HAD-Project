@@ -7,12 +7,43 @@ import axiosInstance from '../../../axiosInstance';
 
 
 
+
+
 const OTPVerification = () => {
 
 
     const navigate = useNavigate();
-    const [otp, setOTP] = useState('');
+    const [otpDetails, setotpDetails] = useState({
+        email: localStorage.getItem('username'),
+        otp: ""
+    });
 
+    const handleChangeInLoginDetails = (e) => {
+
+        const { name, value } = e.target;
+        console.log("Input: ", name, value);
+        setotpDetails({
+            ...otpDetails,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const accessToken = localStorage.getItem('access_token');
+
+        const headers = {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${accessToken}`,
+        };
+        axiosInstance.post('/users/verifyuseraccount', otpDetails, { headers: headers })
+            .then((response) => { 
+                console.log(response.data); 
+                navigate('/home/home');
+            })
+            .catch((error) => { console.log(error);});
+    }
 
     return (
         <div className="white-box">
@@ -22,23 +53,22 @@ const OTPVerification = () => {
                         <Col xs={12} sm={10} md={8} lg={10}>
                             <h2 className="text-center">OTP Verification</h2>
                             <br></br><br></br>
-                            <Form>
+                            <Form onSubmit={handleSubmit}>
 
                                 <Row>
                                     <Col xs={12} md={4}>
                                         <Form.Group controlId="firstname">
-                                            
-                                            {/* <Form.Control.Feedback type="invalid">{errors.fname} Hello</Form.Control.Feedback> */}
+
                                         </Form.Group>
                                     </Col>
                                     <Col xs={12} md={4}>
                                         <Form.Label>Enter OTP:</Form.Label>
                                         <Form.Group controlId="otp">
                                             <Form.Control
-                                                name="fname"
+                                                name="otp"
                                                 type="text"
-                                                value={otp}
-                                                onChange={(e) => setOTP(e.target.value)}
+                                                value={otpDetails.otp}
+                                                onChange={handleChangeInLoginDetails}
                                                 placeholder="6 digit OTP"
                                             // isInvalid={!!errors.fname}
                                             />

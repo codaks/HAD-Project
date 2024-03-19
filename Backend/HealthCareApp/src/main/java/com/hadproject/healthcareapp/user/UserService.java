@@ -47,20 +47,21 @@ public class UserService {
 
     public String sendotp(OtpDto otpDto) {
         String otp = otpUtil.generateOtp();
+        System.out.println("************************I got the email as "+otpDto.getEmail());
         try {
             emailUtil.sendOtpEmail(otpDto.getEmail(), otp);
         } catch (MessagingException e) {
             throw new RuntimeException("Unable to send otp please try again");
         }
         User user = repository.findByEmail(otpDto.getEmail())
-        .orElseThrow(() -> new RuntimeException("User not found with this email: " + otpDto.getEmail()));
+                .orElseThrow(() -> new RuntimeException("User not found with this email: " + otpDto.getEmail()));
+
+        // user.setName(registerDto.getName());
 
         user.setOtp(otp);
         user.setOtpGeneratedTime(LocalDateTime.now());
         repository.save(user);
-//        System.out.println("**********************OTP**************************");
-//        System.out.println(otp);
-//        System.out.println("**********************OTP**************************");
+
         return "Send Otp successfully";
 
     }

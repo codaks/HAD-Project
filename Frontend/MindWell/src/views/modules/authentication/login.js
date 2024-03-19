@@ -1,5 +1,4 @@
 import React, { Fragment,useState } from 'react'
-
 import { Link } from 'react-router-dom'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -58,7 +57,7 @@ const LoginPage = () => {
                     const token = response.data;
                     console.log(token)
                     // Store token in local storage (not secure, consider better methods)
-
+                    
                     localStorage.setItem('id', token.id);
                     localStorage.setItem('access_token', token.access_token);
                     console.log("login Sucessful");
