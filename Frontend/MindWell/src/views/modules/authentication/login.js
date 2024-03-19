@@ -1,5 +1,5 @@
 import React, { Fragment,useState } from 'react'
-// changes
+
 import { Link } from 'react-router-dom'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -7,15 +7,14 @@ import { Pagination, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination';
 
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import img from "../../../assets/images/login/4.png"
 import my_logo from "../../../assets/images/custome-logo.png"
+import axiosInstance from '../../../axiosInstance';
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [alert,setAlert] = useState('');
+
+    const [alert, setAlert] = useState('');
 
     const [errors, setErrors] = useState({});
     const [loginDetails, setLoginDetails] = useState({
@@ -26,7 +25,7 @@ const LoginPage = () => {
     const validateForm = (data) => {
         const errors = {};
         if (!data.email.trim()) {
-          errors.email = 'Email is required';
+            errors.email = 'Email is required';
         }
 
         if (!data.password.trim()) {
@@ -34,16 +33,16 @@ const LoginPage = () => {
         }
         return errors;
     }
+
     const handleChangeInLoginDetails = (e) => {
 
         const { name, value } = e.target;
-        console.log("INput: ",name,value);
+        console.log("INput: ", name, value);
         setLoginDetails({
-          ...loginDetails,
-          [name]: value
+            ...loginDetails,
+            [name]: value
         });
-
-      };
+    };
 
 
     const navigate = useNavigate();
@@ -52,35 +51,30 @@ const LoginPage = () => {
         e.preventDefault();
         const validationErrors = validateForm(loginDetails);
         if (Object.keys(validationErrors).length === 0) {
-            try {
-                console.log(email, password);
-            
-                const response = await axios({
-                    method: 'post',
-                    url: `http://localhost:8082/api/v1/auth/authenticate`,
-                    data: loginDetails,
-                  });
-                
-                const token = response.data;
-                console.log(token)
-                // Store token in local storage (not secure, consider better methods)
-          
-                localStorage.setItem('id', token.id);
-                localStorage.setItem('access_token', token.access_token);
-                console.log("login Sucessful");
-                navigate('/home/home');
-                // Redirect or perform actions upon successful login
-              } catch (error) {
-                setAlert("Username or Password is Incorrect")
-                console.error('Login failed:', error);
-              }
+
+            axiosInstance.post('/auth/authenticate', loginDetails)
+                .then((response) => {
+                    console.log(response.data);
+                    const token = response.data;
+                    console.log(token)
+                    // Store token in local storage (not secure, consider better methods)
+
+                    localStorage.setItem('id', token.id);
+                    localStorage.setItem('access_token', token.access_token);
+                    console.log("login Sucessful");
+                    navigate('/home/home');
+                })
+                .catch((error) => {
+                    setAlert("Username or Password is Incorrect")
+                    console.error('Login failed:', error);
+                })
         }
-        else{
+        else {
             console.log("Validataion Failed")
             setErrors(validationErrors);
         }
 
-        
+
     };
 
 
@@ -129,7 +123,7 @@ const LoginPage = () => {
                                         type="password"
                                         className="form-control mb-0"
                                         id="exampleInputPassword1"
-                                        placeholder="Password"s
+                                        placeholder="Password" s
                                         value={loginDetails.password}
                                         isInvalid={!!errors.password}
                                         onChange={handleChangeInLoginDetails}

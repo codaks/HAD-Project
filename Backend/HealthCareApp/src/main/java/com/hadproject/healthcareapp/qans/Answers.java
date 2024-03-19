@@ -1,7 +1,6 @@
-package com.hadproject.healthcareapp.answer;
+package com.hadproject.healthcareapp.qans;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hadproject.healthcareapp.qans.Question;
 import com.hadproject.healthcareapp.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,15 +8,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Answer")
-public class Answer {
+@Table(name = "Answers")
+public class Answers {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,23 +24,24 @@ public class Answer {
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "q_id")
-    private Question question;
+    private Question q_id;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "uid")
-    private Set<User> from_id;
+    private User u_id;
 
 
     @JsonIgnore
     @Column(nullable = false)
-    private String answer;
+    private String answers_text;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private String date;
 
     @JsonIgnore
     @Column(nullable = false)
     private int flag;
-
-
-
-
 }
+
