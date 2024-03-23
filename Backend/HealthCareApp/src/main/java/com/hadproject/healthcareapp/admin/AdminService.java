@@ -164,6 +164,26 @@ public class AdminService {
     }
 
 
+    public String removeUserDetails(Integer userId){
+        try {
+            // Find the user by ID
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                // Set user status to false
+                user.setActive(false); // Assuming there's a setStatus method to set the user's status
+                userRepository.save(user); // Save the user back to the database with updated status
+                return "User status set to false successfully.";
+            } else {
+                return "User not found.";
+            }
+        } catch (Exception e) {
+            return "Error updating user status: " + e.getMessage();
+        }
+
+    }
+
+
     }
 
 //    public Optional<UserDetail> getProfileByRole(Role role) {

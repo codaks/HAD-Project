@@ -58,6 +58,14 @@ public class AdminController {
         }
     }
 
+    @PostMapping("/removeUser/{userId}")
+    public ResponseEntity<String> removeUser(@PathVariable Integer userId){
+        String result = adminService.removeUserDetails(userId);
+        return ResponseEntity.ok(result);
+    }
+
+
+
 //    @GetMapping("/profile{role}")
 //    public Optional<List<UserDetail>> getProfileByRole(@RequestParam Role role) {
 //        System.out.println("******************************** Profile is HEre ********************************");
