@@ -38,6 +38,15 @@ public class AdminController {
                 .map(users -> ResponseEntity.ok().body(users))
                 .orElse(ResponseEntity.notFound().build());
     }
+//    @GetMapping("/getProfilebyrole/{role}")
+//    public ResponseEntity<List<RoleProfileResponse>> getProfileByRole(@PathVariable Role role) {
+//        Optional<List<RoleProfileResponse>> profileDetails = adminService.getProfileByRole(role);
+//
+//        return profileDetails
+//                .map(profiles -> ResponseEntity.ok().body(profiles))
+//                .orElse(ResponseEntity.notFound().build());
+//    }
+
 //    @GetMapping("/profile{role}")
 //    public Optional<List<UserDetail>> getProfileByRole(@RequestParam Role role) {
 //        System.out.println("******************************** Profile is HEre ********************************");

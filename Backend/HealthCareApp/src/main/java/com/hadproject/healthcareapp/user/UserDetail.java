@@ -25,7 +25,7 @@ public class UserDetail {
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "uid")
     private User uid;
     @Column(nullable = false)
     private String fname;

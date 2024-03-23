@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -11,12 +11,24 @@ import img from "../../../assets/images/login/4.png"
 import my_logo from "../../../assets/images/custome-logo.png";
 import axiosInstance from '../../../axiosInstance';
 
-const RecoverPassword = () => {
+const SetNewPassword = () => {
 
-
+  
   const navigate = useNavigate();
-  const [otpSendDetails, setOTPSendDetails] = useState({
-    email: "",
+
+
+  useEffect(() => {
+    const validateRequest =  () => {
+        if(localStorage.getItem('OTPStatus') != "reset"){
+            navigate('/sign-in');
+        }
+    }
+    validateRequest()
+}, [navigate]);
+
+  const [passwordDetails, setPasswordDetails] = useState({
+    email: localStorage.getItem('email'),
+    password: ""
   });
 
   const [errors, setErrors] = useState({});
@@ -24,19 +36,19 @@ const RecoverPassword = () => {
   const validateForm = (data) => {
     const errors = {};
 
-    if (!data.email.trim()) {
-      errors.email = 'Email is required';
+    if (!data.password.trim()) {
+      errors.password = 'Password is required';
     }
     return errors;
   }
 
 
-  const handleChangeInOTPSendDetails = (e) => {
+  const handleChangePasswordDetails = (e) => {
 
     const { name, value } = e.target;
     console.log("Input: ", name, value);
-    setOTPSendDetails({
-      ...otpSendDetails,
+    setPasswordDetails({
+      ...passwordDetails,
       [name]: value
     });
   };
@@ -44,24 +56,17 @@ const RecoverPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const accessToken = localStorage.getItem('access_token');
-
-
-    const validationErrors = validateForm(otpSendDetails);
+    const validationErrors = validateForm(passwordDetails);
     if (Object.keys(validationErrors).length === 0) {
       const headers = {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       };
 
-      axiosInstance.post('/users/send-otp', otpSendDetails, { headers: headers })
+      axiosInstance.post('/auth/resetpassord', passwordDetails, { headers: headers })
         .then((response) => {
-          console.log(otpSendDetails.email);
-          localStorage.setItem('email', otpSendDetails.email);
           console.log(response.data);
-          localStorage.setItem('OTPStatus', "reset");
-          navigate('/confirm-mail');
+          navigate('/home/home');
         })
         .catch((error) => { console.log(error); });
     }
@@ -91,24 +96,41 @@ const RecoverPassword = () => {
               <div className="sign-in-from">
                 <h1 className="mb-0">Reset Password</h1>
                 <p>
-                  Enter your email address and we'll send you an email with
-                  OTP to reset your password.
+                  Set Your New Password
                 </p>
                 <Form className="mt-4" onSubmit={handleSubmit}>
                   <Form.Group className="form-group">
                     <Form.Label htmlFor="exampleInputEmail1" className="mb-2">
-                      Email address
+                      Password
                     </Form.Label>
                     <Form.Control
-                      name="email"
-                      type="email"
+                      name="password"
+                      type="password"
                       className="form-control mb-0"
+                      value={passwordDetails.password}
                       id="exampleInputEmail1"
-                      placeholder="Enter email"
-                      onChange={handleChangeInOTPSendDetails}
-                      isInvalid={!!errors.email}
+                      placeholder="Enter Password"
+                      onChange={handleChangePasswordDetails}
+                      isInvalid={!!errors.password}
                     />
-                    <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                  </Form.Group>
+
+                  <Form.Group className="form-group">
+                    <Form.Label htmlFor="exampleInputEmail1" className="mb-2">
+                      Confirm Password
+                    </Form.Label>
+                    <Form.Control
+                      name="password"
+                      type="password"
+                      value={passwordDetails.password}
+                      className="form-control mb-0"
+                      id="exampleInputEmail2"
+                      placeholder="Confirm Password"
+                      onChange={handleChangePasswordDetails}
+                      isInvalid={!!errors.password}
+                    />
+                    <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
                   </Form.Group>
 
                   <div className="d-inline-block w-100">
@@ -117,7 +139,7 @@ const RecoverPassword = () => {
                       type="submit"
                       className="btn btn-primary float-end mt-3"
                     >
-                      Send OTP
+                      Reset Password
                     </Button>
                   </div>
                 </Form>
@@ -130,4 +152,4 @@ const RecoverPassword = () => {
   );
 };
 
-export default RecoverPassword;
+export default SetNewPassword;

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +62,48 @@ public class AdminService {
             return Optional.empty();
         }
     }
+
+
+//    public Optional<List<RoleProfileResponse>> getProfileByRole(Role role) {
+//        try {
+//            Optional<List<User>> userDetails = userRepository.findByRole(role);
+//            List<UserDetail> userDetailList = new ArrayList<>();
+//
+//            if(userDetails.isPresent()){
+//                for(User user: userDetails.get()){
+//                    UserDetail userDetail = userDetailsRepository.getById(user.getId());
+//                    userDetailList.add(userDetail);
+//                }
+//            }
+//
+//            List<RoleProfileResponse> roleProfileResponses = new ArrayList<>();
+//            for(UserDetail userDetail : userDetailList){
+//                LocalDate dob = LocalDate.parse(userDetail.getDob()); // Parse dob string to LocalDate
+//
+//                int age = Period.between(dob, LocalDate.now()).getYears();
+//                String address = String.format("%s, %s%s, %s, %s, %d",
+//                        userDetail.getHno(), userDetail.getStreet1(), userDetail.getStreet2(),
+//                        userDetail.getCity(), userDetail.getState(), userDetail.getPin_Code());
+//
+//                RoleProfileResponse response = RoleProfileResponse.builder()
+//                        .name(userDetail.getFname() + " " + userDetail.getLname())
+//                        .Joined_Since(userDetail.getDor().toString())
+//                        .Age(age)
+//                        .contact_no(userDetail.getMobile())
+//                        .gender(userDetail.getGender())
+//                        .Address(address)
+//                        .DateOfBirth(userDetail.getDob().toString())
+//                        .build();
+//
+//                roleProfileResponses.add(response);
+//            }
+//
+//            return Optional.ofNullable(roleProfileResponses.isEmpty() ? null : roleProfileResponses);
+//        } catch(Exception ex) {
+//            ex.printStackTrace();
+//            return Optional.empty();
+//        }
+//    }
 
 
     }
