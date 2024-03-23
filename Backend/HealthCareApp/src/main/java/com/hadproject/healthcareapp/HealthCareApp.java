@@ -87,12 +87,12 @@ public class HealthCareApp {
 //					Courses course11 = Courses.builder().employee(employee1).course_code("CS101").capcity("100").credits("4").name("NO SQL").term("Jan-Juy").year("").year("2023-24").description("NoSQL, short for Not Only SQL, refers to a class of database management systems (DBMS) that deviate from the traditional relational database model. Unlike traditional SQL databases, NoSQL databases are designed to handle a variety of data types and structures, offering flexibility, scalability, and high performance in managing vast amounts of unstructured or semi-structured data.").build();
 //
 //					coursesRepositry.save(course11);
-
+//
 //				}
-
-
-				// Save employees
-				// (Remember to save employeeSalary entries if needed)
+//
+//
+//				// Save employees
+//				// (Remember to save employeeSalary entries if needed)
 
 
 			}

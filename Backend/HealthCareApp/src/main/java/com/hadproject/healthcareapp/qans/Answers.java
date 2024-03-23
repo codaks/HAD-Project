@@ -43,5 +43,9 @@ public class Answers {
     @JsonIgnore
     @Column(nullable = false)
     private int flag;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private int upvotes;
 }
 

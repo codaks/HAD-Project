@@ -3,8 +3,10 @@ import com.hadproject.healthcareapp.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Date;
-import java.util.Optional;
+
+import java.util.*;
+
+import static ch.qos.logback.classic.spi.ThrowableProxyVO.build;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -44,6 +46,7 @@ public class QansService {
                 .answers_text(ansrequest.getAnswers_text())
                 .date(String.valueOf(new Date()))
                 .flag(ansrequest.getFlag())
+                .upvotes(0)
                 .build();
 
         try{
@@ -55,15 +58,49 @@ public class QansService {
         }
     }
 
-    public String flagAnswer(Answers flagAns){
-        Optional<Answers> answer_details = answersRepository.findById(flagAns.getId());
-        if(answer_details.isPresent()){
-            Answers ansToUpdate = answer_details.get();
-
-            ansToUpdate.setFlag(flagAns.getFlag());
-            answersRepository.save(ansToUpdate);
+    public String flagAnswer(int answerId){
+        Optional<Answers> optionalAnswer = answersRepository.findById(answerId);
+        if(optionalAnswer.isPresent()){
+            Answers answer = optionalAnswer.get();
+            answer.setFlag(1);
+            answersRepository.save(answer);
+            return "Answer flagged successfully!";
+        } else {
+            throw new RuntimeException("Answer not found with ID: " + answerId);
         }
     }
+    public String upvoteAnswer(int answerId){
+        Optional<Answers> optionalAnswer = answersRepository.findById(answerId);
+        if(optionalAnswer.isPresent()){
+            Answers answer = optionalAnswer.get();
+            int currentUpvotes = answer.getUpvotes();
+            answer.setUpvotes(currentUpvotes+1);
+            answersRepository.save(answer);
+            return "Upvote incremented successfully";
+        }  else {
+            throw new RuntimeException("Answer not found with ID:" +answerId);
+        }
 
+    }
+    public List<FlaggedAnswerResponse> getAllFlaggedAnswers() {
+        List<Answers> flaggedAnswers = answersRepository.findByFlag(1);
+        List<FlaggedAnswerResponse> flaggedAnswerResponses = new ArrayList<>();
 
+        if(flaggedAnswers != null)
+        {
+            for(Answers answer : flaggedAnswers){
+                FlaggedAnswerResponse  response = FlaggedAnswerResponse.builder()
+                        .id(answer.getId())
+                        .answers_text(answer.getAnswers_text())
+                        .build();
+                flaggedAnswerResponses.add(response);
+            }
+        }else {
+            // Handle the case when no flagged answers are found
+            // For example, you can return an empty list
+            return Collections.emptyList();
+        }
+        return flaggedAnswerResponses;
+
+    }
 }
