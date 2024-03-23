@@ -1,11 +1,9 @@
 package com.hadproject.healthcareapp.auth;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
 
 @RestController
@@ -30,6 +28,13 @@ public class AuthenticationController {
       @RequestBody AuthenticationRequest request
   ) {
     return ResponseEntity.ok(service.authenticate(request));
+  }
+
+  @PostMapping("/resetpassord")
+  public ResponseEntity<String> resetPassword(
+          @RequestBody AuthenticationRequest request
+  ) {
+    return ResponseEntity.ok(service.resetPasswods(request));
   }
 
   @PostMapping("/refresh-token")

@@ -1,5 +1,6 @@
 package com.hadproject.healthcareapp.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hadproject.healthcareapp.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
+
   @Column(unique = true, nullable = false)
   private String email;
   private String password;
@@ -31,10 +33,11 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "user")
   private List<Token> tokens;
 
-  private boolean active;
+  private boolean active = false;
   private String otp;
   private LocalDateTime otpGeneratedTime;
 

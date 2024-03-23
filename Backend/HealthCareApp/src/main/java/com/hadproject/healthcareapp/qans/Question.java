@@ -1,4 +1,4 @@
-package com.hadproject.healthcareapp.question;
+package com.hadproject.healthcareapp.qans;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hadproject.healthcareapp.user.User;
@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 @Data
 @Builder
@@ -21,16 +19,16 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "q_id")
-    int id;
+    private Integer id;
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "uid")
-    private Set<User> u_id;
+    private User u_id;
 
     @JsonIgnore
     @Column(nullable = false)
-    private String Question;
+    private String QuestionText;
 
     @JsonIgnore
     @Column(nullable = false)
@@ -42,7 +40,6 @@ public class Question {
 
     @JsonIgnore
     @Column(nullable = false)
-    private int flag;
-
+    private String flag;
 
 }
