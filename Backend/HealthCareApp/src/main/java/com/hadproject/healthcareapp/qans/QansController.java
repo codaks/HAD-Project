@@ -1,16 +1,16 @@
 package com.hadproject.healthcareapp.qans;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/qaresponse")
 @RequiredArgsConstructor
-public class QansController {
+public class  QansController {
 
     private final QansService service;
 
@@ -25,11 +25,25 @@ public class QansController {
         String result = service.postAnswer(ansRequest);
         return ResponseEntity.ok(result);
 
-        @PostMapping("/flagresponse")
-        public ResponseEntity<String> flagAnswer(@RequestBody Answers flagAns) {
-            String result = service.flagAnswer(flagAns);
-            return ResponseEntity.ok(result);
-        }
-
     }
+
+    @PostMapping("/flagresponse")
+    public ResponseEntity<String> flagAnswer(@RequestBody Map<String, Integer> requestBody) {
+        int answerId =requestBody.get("id");
+        String result = service.flagAnswer(answerId);
+        return ResponseEntity.ok(result);
+    }
+    @PostMapping("/upvote")
+    public ResponseEntity<String>  upvoteAnswer(@RequestBody Map<String , Integer> requestBody){
+        int answerId = requestBody.get("id");
+        String result = service.upvoteAnswer(answerId);
+        return ResponseEntity.ok(result);
+    }
+    @GetMapping("/flagresponse")
+    public ResponseEntity<List<FlaggedAnswerResponse>> getAllFlaggedAnswers(){
+        List<FlaggedAnswerResponse> flaggedAnswers = service.getAllFlaggedAnswers();
+        return ResponseEntity.ok(flaggedAnswers);
+    }
+//    @GetMapping("/allQuestions")
+//    public ResponseEntity<List<QuesResponse>> getAlLQuestions
 }
