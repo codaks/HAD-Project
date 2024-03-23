@@ -1,5 +1,7 @@
 package com.hadproject.healthcareapp.qans;
-import com.hadproject.healthcareapp.employee.Employee;
+
+import com.hadproject.healthcareapp.user.UserDetail;
+import com.hadproject.healthcareapp.user.UserDetailRepository;
 import com.hadproject.healthcareapp.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ public class QansService {
     private final QuestionRepository questionRepository;
     private final AnswersRepository answersRepository;
     private final UserRepository userRepository;
+    private final UserDetailRepository userDetailRepository;
 
     public String postQuestion(QuestionRequest request){
         var user = userRepository.findById(request.getUid()).orElseThrow(() -> new RuntimeException("User not found"));
@@ -158,41 +161,43 @@ public class QansService {
 
 
 
-//    public Optional<List<AnswerResponse>> getAllResponses(Integer questionId){
-//        try {
-//            Optional<List<Answers>> optionalAnswers = Optional.ofNullable(answersRepository.findByQuestionId(questionId));
-//            if (optionalAnswers.isPresent()) {
-//                List<AnswerResponse> answerResponses = new ArrayList<>();
-//                List<Answers> answers = optionalAnswers.get();
-//                for (Answers answer : answers) {
-//                    // Retrieve the UserDetail entity corresponding to the answer's u_id
-//                    Optional<UserDetail> optionalUserDetail = userDetailRepository.findById(answer.getU_id());
-//                    if (optionalUserDetail.isPresent()) {
-//                        UserDetail userDetail = optionalUserDetail.get();
-//                        // Extract the username from the UserDetail entity
-//                        String username = userDetail.getUsername();
-//
-//                        // Create the AnswerResponse object
-//                        AnswerResponse response = AnswerResponse.builder()
-//                                .id(answer.getId())
-//                                .username(username)
-//                                .answers_text(answer.getAnswers_text())
-//                                .date(answer.getDate())
-//                                .flag(answer.getFlag())
-//                                .upvotes(answer.getUpvotes())
-//                                .build();
-//                        answerResponses.add(response);
-//                    }
-//                }
-//                return Optional.of(answerResponses);
-//            } else {
-//                // If no responses found for the given question ID, return Optional.empty()
-//                return Optional.empty();
-//            }
-//        } catch (Exception e) {
-//            // Handle any exceptions and log the error
-//            e.printStackTrace();
-//            return Optional.empty();
-//        }
-//    }
+    public Optional<List<AnswerResponse>> getAllResponses(int questionId ){
+                try {
+                    Optional<List<Answers>> optionalAnswers = Optional.ofNullable(answersRepository.findByQuestionId(questionId));
+                    if (optionalAnswers.isPresent()) {
+                        List<AnswerResponse> answerResponses = new ArrayList<>();
+                        List<Answers> answers = optionalAnswers.get();
+                        for (Answers answer : answers) {
+                            // Retrieve the UserDetail entity corresponding to the answer's u_id
+                            Optional<UserDetail> userd = userDetailsRepository.findByUid(user);
+
+                            Optional<UserDetail> optionalUserDetail = userDetailRepository.findByUid(answer.getU_id());
+                            if (optionalUserDetail.isPresent()) {
+                                UserDetail userDetail = optionalUserDetail.get();
+                                // Extract the username from the UserDetail entity
+                                String username = userDetail.getUsername();
+
+                                // Create the AnswerResponse object
+                                AnswerResponse response = AnswerResponse.builder()
+                                        .id(answer.getId())
+                                        .username(username)
+                                        .answers_text(answer.getAnswers_text())
+                                        .date(answer.getDate())
+                                        .flag(answer.getFlag())
+                                        .upvotes(answer.getUpvotes())
+                                        .build();
+                                answerResponses.add(response);
+                            }
+                        }
+                        return Optional.of(answerResponses);
+                    } else {
+                        // If no responses found for the given question ID, return Optional.empty()
+                        return Optional.empty();
+                    }
+                } catch (Exception e) {
+                    // Handle any exceptions and log the error
+                    e.printStackTrace();
+                    return Optional.empty();
+                }
+            }
 }

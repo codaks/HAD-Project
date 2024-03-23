@@ -70,10 +70,10 @@ public class  QansController {
         return ResponseEntity.ok(response);
     }
 
-// }
-//    @GetMapping("/responses/{questionId}")
-//    public Optional<List<AnswerResponse>> getAllAnswers(@PathVariable Integer questionId){
-//        Optional<List<AnswerResponse>> responses = service.getAllResponses(questionId);
-//        return responses;
-//    }
+
+    @GetMapping("/responses/{questionId}")
+    public Optional<List<AnswerResponse>> getAllResponses(@PathVariable Integer questionId){
+        Optional<List<AnswerResponse>> responses = service.getAllResponses(questionId);
+        return responses;
+    }
 }

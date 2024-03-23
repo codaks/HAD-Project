@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface AnswersRepository extends JpaRepository<Answers, Integer> {
     List<Answers> findByFlag(int flag);
-//    List<Answers> findByQuestionId(int questionId);
+    List<Answers> findByQuestionId(int questionId);
 }
 
 
