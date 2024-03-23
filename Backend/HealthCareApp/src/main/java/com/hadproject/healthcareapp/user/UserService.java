@@ -20,6 +20,7 @@ public class UserService {
 
     @Autowired
     private OtpUtil otpUtil;
+
     @Autowired
     private EmailUtil emailUtil;
 
@@ -75,7 +76,7 @@ public class UserService {
         System.out.println("****************************************");
         System.out.println("Get the User");
         System.out.println("****************************************");
-
+        System.out.println("user DEtails: "+user.getEmail());
         if (user.getOtp().equals(otp) && Duration.between(user.getOtpGeneratedTime(),
                 LocalDateTime.now()).getSeconds() < (2 * 60)) {
             user.setActive(true);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import './otp-verification.css';
@@ -6,17 +6,42 @@ import './otp-verification.css';
 import axiosInstance from '../../../axiosInstance';
 
 
-
-
-
 const OTPVerification = () => {
-
-
+    
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const validateRequest =  () => {
+            if(localStorage.getItem('OTPStatus') == null){
+                navigate('/sign-in');
+            }
+
+            console.log("Inside Function:")
+        }
+        validateRequest()
+    }, [navigate]);
+    
+
     const [otpDetails, setotpDetails] = useState({
-        email: localStorage.getItem('username'),
+        email: localStorage.getItem('email'),
         otp: ""
     });
+
+    
+    const [errors, setErrors] = useState({});
+
+    const validateForm = (data) => {
+        const errors = {};
+
+        if (!data.otp.trim()) {
+            errors.otp = 'OTP is required';
+        }
+        else if (!/^\d{6}$/.test(data.otp)) {
+            errors.otp = 'OTP is invalid';
+        }
+        return errors;
+    }
+
 
     const handleChangeInLoginDetails = (e) => {
 
@@ -32,17 +57,32 @@ const OTPVerification = () => {
         e.preventDefault();
         const accessToken = localStorage.getItem('access_token');
 
-        const headers = {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            Authorization: `Bearer ${accessToken}`,
-        };
+
+        const validationErrors = validateForm(otpDetails);
+        if (Object.keys(validationErrors).length === 0) {
+            const headers = {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                Authorization: `Bearer ${accessToken}`,
+            };
+
         axiosInstance.post('/users/verifyuseraccount', otpDetails, { headers: headers })
             .then((response) => { 
                 console.log(response.data); 
-                navigate('/home/home');
+                const otpStatus = localStorage.getItem('OTPStatus');
+                if(otpStatus == "reset"){
+                    navigate('/set-new-password');
+                }
+                else if(otpStatus == "register"){
+                    navigate('/sign-in');
+                }
             })
             .catch((error) => { console.log(error);});
+        }
+        else {
+            console.log("Validataion Failed")
+            setErrors(validationErrors);
+        }
     }
 
     return (
@@ -70,9 +110,9 @@ const OTPVerification = () => {
                                                 value={otpDetails.otp}
                                                 onChange={handleChangeInLoginDetails}
                                                 placeholder="6 digit OTP"
-                                            // isInvalid={!!errors.fname}
+                                            isInvalid={!!errors.otp}
                                             />
-                                            {/* <Form.Control.Feedback type="invalid">{errors.fname} Hello</Form.Control.Feedback> */}
+                                            <Form.Control.Feedback type="invalid">{errors.otp}</Form.Control.Feedback>
                                         </Form.Group>
                                     </Col>
                                 </Row>

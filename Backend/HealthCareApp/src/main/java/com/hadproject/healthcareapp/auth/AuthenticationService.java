@@ -19,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -147,4 +148,26 @@ public class AuthenticationService {
       }
     }
   }
+
+  public String resetPasswods(AuthenticationRequest request) {
+    Optional<User> user = repository.findByEmail(request.getEmail());
+    if(user.isPresent()){
+      User user1 = user.get();
+      user1.setPassword(passwordEncoder.encode(request.getPassword()));
+      try {
+        repository.save(user1);
+      }
+      catch (Exception e){
+        System.out.println(e+"");
+      }
+    }
+    else{
+      return "User Did Not Present";
+    }
+
+    return  "Reset Successfully";
+  }
 }
+
+
+
