@@ -20,6 +20,13 @@ const AdminDashboard = () => {
     const [totalModerators,setTotalModerators] = useState(0);
     const [totalExperts,setTotalExperts] = useState(0);
 
+    const [roleList, setRoleList] = useState([
+        {
+            name: "",
+            gender: "",
+            contact_no: ""
+        }
+    ]);
     const navigate = useNavigate();
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -43,15 +50,20 @@ const AdminDashboard = () => {
                 axiosInstance.get('/admin/getcount/PATIENT', { headers: headers }).then((response) => {
                     setTotalPatients(response.data);
                 });
-                axiosInstance.get('/admin/getcount/EXPERT', { headers: headers }).then((response) => {
-                    setTotalExperts(response.data);
+                // axiosInstance.get('/admin/getcount/EXPERT', { headers: headers }).then((response) => {
+                //     setTotalExperts(response.data);
+                // });
+                // axiosInstance.get('/admin/getcount/MODERATOR', { headers: headers }).then((response) => {
+                //     setTotalModerators(response.data);
+                // // });
+                // axiosInstance.get('/admin/getcount/SENIOR_DOCTOR', { headers: headers }).then((response) => {
+                //     setTotalDoctors(response.data);
+                // });
+                
+                axiosInstance.get('/admin/getlistbyrole/ADMIN', { headers: headers }).then((response) => {
+                    console.log("The data is: ", response.data);    
                 });
-                axiosInstance.get('/admin/getcount/MODERATOR', { headers: headers }).then((response) => {
-                    setTotalModerators(response.data);
-                });
-                axiosInstance.get('/admin/getcount/SENIOR_DOCTOR', { headers: headers }).then((response) => {
-                    setTotalDoctors(response.data);
-                });
+
             }
             catch (error) {
                 console.error('Error fetching data:', error);
