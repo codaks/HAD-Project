@@ -25,11 +25,11 @@ public class QansController {
         String result = service.postAnswer(ansRequest);
         return ResponseEntity.ok(result);
 
-        @PostMapping("/flagresponse")
-        public ResponseEntity<String> flagAnswer(@RequestBody Answers flagAns) {
-            String result = service.flagAnswer(flagAns);
-            return ResponseEntity.ok(result);
-        }
+//        @PostMapping("/flagresponse")
+//        public ResponseEntity<String> flagAnswer(@RequestBody Answers flagAns) {
+//            String result = service.flagAnswer(flagAns);
+//            return ResponseEntity.ok(result);
+//        }
 
     }
 }
