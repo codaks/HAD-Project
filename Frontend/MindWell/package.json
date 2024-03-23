@@ -80,6 +80,7 @@
     ]
   },
   "devDependencies": {
+    "@types/babel__generator": "^7.6.8",
     "http-proxy-middleware": "^2.0.6"
   }
 }
