@@ -18,7 +18,7 @@ public class AnswerResponse {
     private int id;
 
     @JsonProperty("Answer posted by:")
-    private User u_id;
+    private String name;
 
     @JsonProperty("answers_text")
     private String answers_text;

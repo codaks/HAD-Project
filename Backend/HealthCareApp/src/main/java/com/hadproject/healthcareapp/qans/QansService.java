@@ -1,5 +1,6 @@
 package com.hadproject.healthcareapp.qans;
 
+import com.hadproject.healthcareapp.user.User;
 import com.hadproject.healthcareapp.user.UserDetail;
 import com.hadproject.healthcareapp.user.UserDetailRepository;
 import com.hadproject.healthcareapp.user.UserRepository;
@@ -44,7 +45,7 @@ public class QansService {
         var question = questionRepository.findById( ansrequest.getQ_id()).orElseThrow(() -> new RuntimeException("Question not found"));
 
         var answers = Answers.builder()
-                .q_id( question)
+                .questionid( question)
                 .u_id(user)
                 .answers_text(ansrequest.getAnswers_text())
                 .date(String.valueOf(new Date()))
@@ -163,24 +164,28 @@ public class QansService {
 
     public Optional<List<AnswerResponse>> getAllResponses(int questionId ){
                 try {
-                    Optional<List<Answers>> optionalAnswers = Optional.ofNullable(answersRepository.findByQuestionId(questionId));
+                    var ques = questionRepository.findById(questionId).orElseThrow(() -> new RuntimeException("User not found"));
+                    System.out.println("****************  Question id is  :"+questionId+" "+ques.getQuestionText());
+                    Optional<List<Answers>> optionalAnswers = Optional.ofNullable(answersRepository.findByQuestionid(ques));
                     if (optionalAnswers.isPresent()) {
+                        System.out.println("Heyyyyyyyyyyyyyyyyyyyy I got Some Answers");
                         List<AnswerResponse> answerResponses = new ArrayList<>();
                         List<Answers> answers = optionalAnswers.get();
                         for (Answers answer : answers) {
                             // Retrieve the UserDetail entity corresponding to the answer's u_id
-                            Optional<UserDetail> userd = userDetailsRepository.findByUid(user);
 
+                            System.out.println(answer.getAnswers_text());
                             Optional<UserDetail> optionalUserDetail = userDetailRepository.findByUid(answer.getU_id());
                             if (optionalUserDetail.isPresent()) {
+                                System.out.println("************* I also Got the user");
                                 UserDetail userDetail = optionalUserDetail.get();
                                 // Extract the username from the UserDetail entity
-                                String username = userDetail.getUsername();
+                                String username = userDetail.getFname();
 
                                 // Create the AnswerResponse object
                                 AnswerResponse response = AnswerResponse.builder()
                                         .id(answer.getId())
-                                        .username(username)
+                                        .name(username)
                                         .answers_text(answer.getAnswers_text())
                                         .date(answer.getDate())
                                         .flag(answer.getFlag())

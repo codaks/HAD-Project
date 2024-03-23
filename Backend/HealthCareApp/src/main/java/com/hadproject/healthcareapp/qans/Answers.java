@@ -24,7 +24,7 @@ public class Answers {
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "q_id")
-    private Question q_id;
+    private Question questionid;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
