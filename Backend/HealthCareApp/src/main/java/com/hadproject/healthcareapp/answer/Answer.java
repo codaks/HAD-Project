@@ -1,7 +1,7 @@
 package com.hadproject.healthcareapp.answer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hadproject.healthcareapp.question.Question;
+import com.hadproject.healthcareapp.qans.Question;
 import com.hadproject.healthcareapp.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
