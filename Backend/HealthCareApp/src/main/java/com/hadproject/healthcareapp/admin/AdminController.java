@@ -1,12 +1,18 @@
 package com.hadproject.healthcareapp.admin;
 
+import com.hadproject.healthcareapp.Courses.Courses;
 import com.hadproject.healthcareapp.auth.AuthenticationService;
 import com.hadproject.healthcareapp.department.Department;
 import com.hadproject.healthcareapp.user.Role;
+import com.hadproject.healthcareapp.user.User;
+import com.hadproject.healthcareapp.user.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -24,6 +30,22 @@ public class AdminController {
         int data = adminService.analytics(role);
         return data;
     }
+    @GetMapping("/getlistbyrole/{role}")
+    public ResponseEntity<List<RoleListResponse>> getUsersByRole(@PathVariable Role role) {
+        Optional<List<RoleListResponse>> userDetails = adminService.getUsersByRole(role);
+
+        return userDetails
+                .map(users -> ResponseEntity.ok().body(users))
+                .orElse(ResponseEntity.notFound().build());
+    }
+//    @GetMapping("/profile{role}")
+//    public Optional<List<UserDetail>> getProfileByRole(@RequestParam Role role) {
+//        System.out.println("******************************** Profile is HEre ********************************");
+//        List<UserDetail> userDetails = adminService.getProfileByRole(role);
+//        return Optional.ofNullable(userDetails);
+//    }
+
+
     //    @GetMapping("/getentries/{role}")
 //    public List<RoleListResponse> authenticateMultiple(@PathVariable Role role)
 //    {

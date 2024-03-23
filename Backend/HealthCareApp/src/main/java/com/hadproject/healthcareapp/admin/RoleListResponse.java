@@ -17,8 +17,7 @@ public class RoleListResponse {
     private String gender;
 
     @JsonProperty("contact_no")
-    private int contact_no;
-
+    private String contact_no;
 
 }
 
