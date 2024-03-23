@@ -1,5 +1,6 @@
 package com.hadproject.healthcareapp.qans;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionRequest {
-    private int uid;
-    private String question_text;
-    private String tags;
-    private int flag;
+public class QuestionResponse {
+    @JsonProperty("id")
+    private int id;
 
+    @JsonProperty("QuestionText")
+    private String QuestionText;
 }
-

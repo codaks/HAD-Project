@@ -1,12 +1,12 @@
 package com.hadproject.healthcareapp.qans;
+import com.hadproject.healthcareapp.employee.Employee;
 import com.hadproject.healthcareapp.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
-import static ch.qos.logback.classic.spi.ThrowableProxyVO.build;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -69,6 +69,19 @@ public class QansService {
             throw new RuntimeException("Answer not found with ID: " + answerId);
         }
     }
+
+    public String flagQuestion(int questionId){
+        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+        if(optionalQuestion.isPresent()){
+            Question question = optionalQuestion.get();
+            question.setFlag(1);
+            questionRepository.save(question);
+            return "Question flagged successfully";
+
+        }else{
+            throw new RuntimeException("Question not found with the ID" + questionId);
+        }
+    }
     public String upvoteAnswer(int answerId){
         Optional<Answers> optionalAnswer = answersRepository.findById(answerId);
         if(optionalAnswer.isPresent()){
@@ -89,7 +102,7 @@ public class QansService {
         if(flaggedAnswers != null)
         {
             for(Answers answer : flaggedAnswers){
-                FlaggedAnswerResponse  response = FlaggedAnswerResponse.builder()
+                FlaggedAnswerResponse response = FlaggedAnswerResponse.builder()
                         .id(answer.getId())
                         .answers_text(answer.getAnswers_text())
                         .build();
@@ -103,4 +116,83 @@ public class QansService {
         return flaggedAnswerResponses;
 
     }
+    public List<QuestionResponse> getAllFlaggedQuestions() {
+        List<Question> flaggedQuestions = questionRepository.findByFlag(1); // Assuming flag value of true represents flagged questions
+        List<QuestionResponse> QuestionResponses = new ArrayList<>();
+
+        if (flaggedQuestions != null && !flaggedQuestions.isEmpty()) {
+            for (Question question : flaggedQuestions) {
+                QuestionResponse response = QuestionResponse.builder()
+                        .id(question.getId())
+                        .QuestionText(question.getQuestionText())
+                        .build();
+                QuestionResponses.add(response);
+            }
+        } else {
+            // Handle the case when no flagged questions are found
+            // For example, you can return an empty list
+            return Collections.emptyList();
+        }
+        return QuestionResponses;
+    }
+
+    public List<QuestionResponse>  getAllQuestion(){
+        List<Question> questions = questionRepository.findAll();
+        List<QuestionResponse> questionResponses = new ArrayList<>();
+
+        if(!questions.isEmpty()){
+
+            for(Question question: questions){
+                QuestionResponse response = QuestionResponse.builder()
+                        .id(question.getId())
+                        .QuestionText(question.getQuestionText())
+                        .build();
+                questionResponses.add(response);
+            }
+        }
+        else{
+            return Collections.emptyList();
+        }
+        return questionResponses;
+    }
+
+
+
+//    public Optional<List<AnswerResponse>> getAllResponses(Integer questionId){
+//        try {
+//            Optional<List<Answers>> optionalAnswers = Optional.ofNullable(answersRepository.findByQuestionId(questionId));
+//            if (optionalAnswers.isPresent()) {
+//                List<AnswerResponse> answerResponses = new ArrayList<>();
+//                List<Answers> answers = optionalAnswers.get();
+//                for (Answers answer : answers) {
+//                    // Retrieve the UserDetail entity corresponding to the answer's u_id
+//                    Optional<UserDetail> optionalUserDetail = userDetailRepository.findById(answer.getU_id());
+//                    if (optionalUserDetail.isPresent()) {
+//                        UserDetail userDetail = optionalUserDetail.get();
+//                        // Extract the username from the UserDetail entity
+//                        String username = userDetail.getUsername();
+//
+//                        // Create the AnswerResponse object
+//                        AnswerResponse response = AnswerResponse.builder()
+//                                .id(answer.getId())
+//                                .username(username)
+//                                .answers_text(answer.getAnswers_text())
+//                                .date(answer.getDate())
+//                                .flag(answer.getFlag())
+//                                .upvotes(answer.getUpvotes())
+//                                .build();
+//                        answerResponses.add(response);
+//                    }
+//                }
+//                return Optional.of(answerResponses);
+//            } else {
+//                // If no responses found for the given question ID, return Optional.empty()
+//                return Optional.empty();
+//            }
+//        } catch (Exception e) {
+//            // Handle any exceptions and log the error
+//            e.printStackTrace();
+//            return Optional.empty();
+//        }
+//    }
 }

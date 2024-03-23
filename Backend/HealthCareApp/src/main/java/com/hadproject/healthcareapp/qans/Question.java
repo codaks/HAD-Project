@@ -40,6 +40,6 @@ public class Question {
 
     @JsonIgnore
     @Column(nullable = false)
-    private String flag;
+    private Integer flag;
 
 }
