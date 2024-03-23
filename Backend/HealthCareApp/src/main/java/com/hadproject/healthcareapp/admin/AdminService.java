@@ -1,14 +1,12 @@
 package com.hadproject.healthcareapp.admin;
 
 
-import com.hadproject.healthcareapp.user.Role;
-import com.hadproject.healthcareapp.user.User;
-import com.hadproject.healthcareapp.user.UserRepository;
+import com.hadproject.healthcareapp.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +17,7 @@ public class AdminService {
 
     @Autowired
     private final UserRepository userRepository;
-
+    private final UserDetailRepository userDetailsRepository;
 
 
     public Integer analytics(Role role) {
@@ -31,6 +29,59 @@ public class AdminService {
         }
         return 0;
     }
+    // New functionality to list users by role
+    public Optional<List<RoleListResponse>> getUsersByRole(Role role) {
+        Optional<List<User>> userDetails = Optional.empty();
+        List<UserDetail> userDetail = new ArrayList<UserDetail>();
+
+        try {
+            userDetails = userRepository.findByRole(role);
+            if(userDetails.isPresent()){
+                List<User> userList = userDetails.get();
+                for(User user: userList){
+                    UserDetail userd = userDetailsRepository.getById(user.getId());
+                    userDetail.add(userd);
+                }
+            }
+
+            List<RoleListResponse> roleListResponses=new ArrayList<>();
+            for(UserDetail userDetail1 :userDetail){
+                RoleListResponse response=RoleListResponse.builder().name(userDetail1.getFname())
+                        .gender(userDetail1.getGender())
+                        .contact_no(userDetail1.getMobile()).build();
+
+                roleListResponses.add(response);
+            }
+
+            return Optional.of(roleListResponses);
+        }
+        catch(Exception ex) {
+            ex.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+
+    }
+
+//    public Optional<UserDetail> getProfileByRole(Role role) {
+//        Optional<User> optionalUsers = userRepository.findByRole(role);
+//        List<UserDetail> userDetailsList = new ArrayList<>();
+//
+//        if (optionalUsers.isPresent()) {
+//            List<User> users = optionalUsers.get();
+//            for (User user : users) {
+//                Optional<UserDetail> userDetail = userDetailsRepository.findById(user.getId());
+//                userDetail.ifPresent(userDetailsList::add);
+//            }
+//        }
+//
+//        return userDetailsList;
+//    }
+
+
+
+
     //    public List<RoleListResponse> processMultipleAuthenticationResponses(List< RoleListResponse> authResponses) {
 //        List< RoleListResponse> processedResponses = new ArrayList<>();
 //
@@ -64,4 +115,4 @@ public class AdminService {
 //
 //        return processedResponses;
 //    }
-}
+
