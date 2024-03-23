@@ -3,6 +3,8 @@ import DefaultLayout from "../layouts/default-layout"
 
 // pages
 import Index from '../views/index'
+import AdminDashboard from "../views/AdminDashboard";
+import AdminProfile from "../views/AdminProfile";
 import DashboardOne from '../views/dashboard-1';
 import DashboardTwo from "../views/dashboard-2";
 import DashboardThree from "../views/dashboard-3";
@@ -73,6 +75,10 @@ import EChartPage from "../views/modules/charts/eChart";
 import AmCharts from "../views/modules/charts/amChart";
 import ChartJsPage from "../views/modules/charts/chartJs";
 import PrivacySetting from "../views/modules/extra-pages/privacy-setting";
+
+
+
+
 import { Navigate } from "react-router-dom";
 export const IndexRouters = [
     {
@@ -86,6 +92,14 @@ export const IndexRouters = [
             {
                 path: 'home',
                 element : <Index />,
+            },
+            {
+                path:'AdminDashboard',
+                element:<AdminDashboard/>
+            },
+            {
+                path:'AdminProfile',
+                element:<AdminProfile/>
             },
             {
                 path:'dashboard-1',

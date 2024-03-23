@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import axiosInstance from '../../../axiosInstance';
+
 import './register.css';
 
 
@@ -19,7 +20,7 @@ const Register = () => {
 
 
   const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-  
+
   const [userDetail, setUserDetail] = useState({
     fname: "",
     mname: "",
@@ -41,6 +42,9 @@ const Register = () => {
     role: "PATIENT"
   });
 
+  const [otpDetails, setOTPDetials] = useState({
+    email: ""
+  });
   const [errors, setErrors] = useState({});
 
 
@@ -149,24 +153,42 @@ const Register = () => {
 
     const validationErrors = validateForm(userDetail);
     if (Object.keys(validationErrors).length === 0) {
+      axiosInstance.post('/auth/register', userDetail)
+        .then((response) => {
 
-      try {
+          const token = response.data;
+          console.log(token);
+          localStorage.setItem('id', token.id);
+          localStorage.setItem('access_token', token.access_token);
+          localStorage.setItem('username', userDetail.email);
+          setOTPDetials({
+            ...otpDetails,
+            email: userDetail.email
+          });
+          const accessToken = localStorage.getItem('access_token');
 
-        console.log("This is User Detials",userDetail)
-        const response = await axios({
-          method: 'post',
-          url: `http://localhost:8082/api/v1/auth/register`,
-          data: userDetail,
+          const headers = {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${accessToken}`,
+          };
+          console.log("Now Sending OTP: ",headers);
+          axiosInstance.post('/users/send-otp',{email: userDetail.email}, { headers: headers})
+            .then((response) => {
+              console.log(response.data);
+              navigate('/confirm-mail');
+            })
+            .catch((error) => {
+              console.log("This Errors is in Sending OTP");
+              console.log(error);
+            });
+          // navigate('/sign-in');
+        })
+        .catch((error) => {
+          console.log(error);
         });
 
 
-        const token = response.data;
-        console.log(token)
-        navigate('/sign-in');
-      }
-      catch (error) {
-        console.log(error);
-      }
     } else {
       console.log("Validataion Failed")
       setErrors(validationErrors);
