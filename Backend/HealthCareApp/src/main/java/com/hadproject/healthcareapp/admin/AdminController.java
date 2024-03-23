@@ -47,12 +47,16 @@ public class AdminController {
 //                .orElse(ResponseEntity.notFound().build());
 //    }
 
-//    @GetMapping("/viewProfile/{userId}")
-//    public ResponseEntity<RoleProfileResponse> viewProfile(@PathVariable Integer userId) {
-//        return adminService.viewProfileDetails(userId)
-//                .map(profile -> ResponseEntity.ok().body(profile))
-//                .orElse(ResponseEntity.notFound().build());
-//    }
+    @GetMapping("/viewProfileDetails/{userId}")
+    public ResponseEntity<RoleProfileResponse> viewProfile(@PathVariable Integer userId) {
+        Optional<RoleProfileResponse> profileOptional = adminService.viewProfileDetails(userId);
+
+        if (profileOptional.isPresent()) {
+            return ResponseEntity.ok().body(profileOptional.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 //    @GetMapping("/profile{role}")
 //    public Optional<List<UserDetail>> getProfileByRole(@RequestParam Role role) {
