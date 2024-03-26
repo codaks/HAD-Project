@@ -355,11 +355,11 @@ export const IndexRouters = [
                 element:<UnIconsPage/>
             },
             {
-                path:'highlevel',
+                path:'questions',
                 element:<HighLevel/>
             },
             {
-                path:'lowlevel',
+                path:'answers',
                 element:<Lowlevel/>
             },
             {
