@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Row, Col, Form, FormControl, Button, Card } from "react-bootstrap"; // Importing necessary components from react-bootstrap
-import "bootstrap/dist/css/bootstrap.min.css"; // Importing Bootstrap CSS
+
 
 const Addblogs = () => {
     return(
