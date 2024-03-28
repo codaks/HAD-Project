@@ -13,12 +13,12 @@ import axiosInstance from '../axiosInstance';
 
 const AdminDashboard = () => {
 
-    
-    const [totalAdmin,setToalAdmin] = useState(0);
-    const [totalDoctors,setTotalDoctors] = useState(0); 
-    const [totalPatients,setTotalPatients] = useState(0);
-    const [totalModerators,setTotalModerators] = useState(0);
-    const [totalExperts,setTotalExperts] = useState(0);
+
+    const [totalAdmin, setToalAdmin] = useState(0);
+    const [totalDoctors, setTotalDoctors] = useState(0);
+    const [totalPatients, setTotalPatients] = useState(0);
+    const [totalModerators, setTotalModerators] = useState(0);
+    const [totalExperts, setTotalExperts] = useState(0);
 
     const [roleList, setRoleList] = useState([
         {
@@ -27,10 +27,46 @@ const AdminDashboard = () => {
             contact_no: ""
         }
     ]);
+
+    const [selectedOption, setSelectedOption] = useState({
+        key: 2, value: 'Patients', name: "PATIENT"
+    });
+
+    const dropdownOptions = [
+        { key: 0, value: 'Admin', name: "ADMIN" },
+        { key: 1, value: 'Doctors', name: "SENIOR_DOCTOR" },
+        { key: 2, value: 'Patients', name: "PATIENT" },
+        { key: 3, value: 'Moderators', name: "MODERATOR" },
+        { key: 4, value: 'Experts', name: "EXPERT" }
+    ];
+
+
+    const handleOptionSelect = (option) => {
+        const accessToken = localStorage.getItem('access_token');
+        const headers = {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${accessToken}`,
+        };
+        
+        try {
+            setSelectedOption(dropdownOptions[option]);
+            console.log("Selected Option: ", selectedOption.name)
+            const url = '/admin/getlistbyrole/' + selectedOption.name;
+            axiosInstance.get(url, { headers: headers }).then((response) => {
+                console.log("I had Changed the URL");
+                setRoleList(response.data);
+            });
+        } catch (exception) {
+            console.log(exception)
+        }
+    };
+
     const navigate = useNavigate();
     useEffect(() => {
         const fetchDashboardData = async () => {
             const accessToken = localStorage.getItem('access_token');
+
             console.log(accessToken)
             if (accessToken === null) {
                 navigate('/sign-in');
@@ -42,9 +78,9 @@ const AdminDashboard = () => {
                     "Access-Control-Allow-Origin": "*",
                     Authorization: `Bearer ${accessToken}`,
                 };
-
+                const url = '/admin/getlistbyrole/' + selectedOption.name;
                 axiosInstance.get('/admin/getcount/ADMIN', { headers: headers }).then((response) => {
-                    console.log("Admins: ",response.data);
+                    console.log("Admins: ", response.data);
                     setToalAdmin(response.data);
                 });
                 axiosInstance.get('/admin/getcount/PATIENT', { headers: headers }).then((response) => {
@@ -59,9 +95,10 @@ const AdminDashboard = () => {
                 // axiosInstance.get('/admin/getcount/SENIOR_DOCTOR', { headers: headers }).then((response) => {
                 //     setTotalDoctors(response.data);
                 // });
-                
-                axiosInstance.get('/admin/getlistbyrole/ADMIN', { headers: headers }).then((response) => {
-                    console.log("The data is: ", response.data);    
+
+                axiosInstance.get(url, { headers: headers }).then((response) => {
+                    console.log("The data is: ", response.data);
+                    setRoleList(response.data);
                 });
 
             }
@@ -71,7 +108,7 @@ const AdminDashboard = () => {
         };
         fetchDashboardData();
 
-    }, [navigate]);
+    }, [selectedOption]);
     {/*const [graphData, setGraphData] = useState({
         labels: [],  // Initialize with empty labels
         datasets: [{
@@ -385,24 +422,14 @@ const AdminDashboard = () => {
                                                 aria-haspopup="true"
                                                 aria-expanded="false"
                                             >
-                                                Doctors
+                                                {selectedOption.value}
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu className="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <Dropdown.Item className="dropdown-item" href="#">
-                                                    Admin
-                                                </Dropdown.Item>
-                                                <Dropdown.Item className="dropdown-item" href="#">
-                                                    Doctors
-                                                </Dropdown.Item>
-                                                <Dropdown.Item className="dropdown-item" href="#">
-                                                    Patients
-                                                </Dropdown.Item>
-                                                <Dropdown.Item className="dropdown-item" href="#">
-                                                    Moderators
-                                                </Dropdown.Item>
-                                                <Dropdown.Item className="dropdown-item" href="#">
-                                                    Experts
-                                                </Dropdown.Item>
+                                                {dropdownOptions.map((option) => (
+                                                    <Dropdown.Item key={option.key} className="dropdown-item" href="#" onClick={() => handleOptionSelect(option.key)}>
+                                                        {option.value}
+                                                    </Dropdown.Item>
+                                                ))}
                                             </Dropdown.Menu>
                                         </Dropdown>
                                     </ButtonGroup>
@@ -428,18 +455,20 @@ const AdminDashboard = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr className="text-center table-primary">
-                                                <td scope="row \">Peter Molive</td>
-                                                <td>MBBS</td>
-                                                <td>M</td>
-                                                <td>
-                                                    {/*<button type="button" class="btn btn-danger" name="button"> Remove </button>*/}
+                                            {roleList.map((key, index) => (
+                                                <tr className="text-center table-primary">
+                                                    <td scope="row \">{key.name}</td>
+                                                    <td>{key.contact_no}</td>
+                                                    <td>{key.gender}</td>
                                                     <td>
-                                                        <span className="table-remove"><button type="button"
-                                                            className="btn iq-bg-danger btn-rounded btn-sm my-0">Remove</button></span>
+                                                        {/*<button type="button" class="btn btn-danger" name="button"> Remove </button>*/}
+                                                        <td>
+                                                            <span className="table-remove"><button type="button"
+                                                                className="btn iq-bg-danger btn-rounded btn-sm my-0">Remove</button></span>
+                                                        </td>
                                                     </td>
-                                                </td>
-                                            </tr>
+                                                </tr>
+                                            ))}
                                         </tbody>
                                         {/* <tbody>
                                     {doctors.map(doctor => (
