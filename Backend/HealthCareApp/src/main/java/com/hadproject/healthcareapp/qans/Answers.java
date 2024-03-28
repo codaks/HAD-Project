@@ -47,5 +47,9 @@ public class Answers {
     @JsonIgnore
     @Column(nullable = false)
     private int upvotes;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private boolean status;
 }
 

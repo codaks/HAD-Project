@@ -27,7 +27,8 @@ public class QansService {
                 .QuestionText(request.getQuestion_text())
                 .tags(request.getTags())
                 .date(String.valueOf(new Date()))
-                .flag(request.getFlag())
+                .flag(0)
+                .status(true)
                 .build();
 
           try{
@@ -49,8 +50,9 @@ public class QansService {
                 .u_id(user)
                 .answers_text(ansrequest.getAnswers_text())
                 .date(String.valueOf(new Date()))
-                .flag(ansrequest.getFlag())
+                .flag(0)
                 .upvotes(0)
+                .status(true)
                 .build();
 
         try{
@@ -141,7 +143,7 @@ public class QansService {
     }
 
     public List<QuestionResponse>  getAllQuestion(){
-        List<Question> questions = questionRepository.findAll();
+        List<Question> questions= questionRepository.findByStatus(true);
         List<QuestionResponse> questionResponses = new ArrayList<>();
 
         if(!questions.isEmpty()){
@@ -162,47 +164,86 @@ public class QansService {
 
 
 
-    public Optional<List<AnswerResponse>> getAllResponses(int questionId ){
-                try {
-                    var ques = questionRepository.findById(questionId).orElseThrow(() -> new RuntimeException("User not found"));
-                    System.out.println("****************  Question id is  :"+questionId+" "+ques.getQuestionText());
-                    Optional<List<Answers>> optionalAnswers = Optional.ofNullable(answersRepository.findByQuestionid(ques));
-                    if (optionalAnswers.isPresent()) {
-                        System.out.println("Heyyyyyyyyyyyyyyyyyyyy I got Some Answers");
-                        List<AnswerResponse> answerResponses = new ArrayList<>();
-                        List<Answers> answers = optionalAnswers.get();
-                        for (Answers answer : answers) {
-                            // Retrieve the UserDetail entity corresponding to the answer's u_id
 
-                            System.out.println(answer.getAnswers_text());
-                            Optional<UserDetail> optionalUserDetail = userDetailRepository.findByUid(answer.getU_id());
-                            if (optionalUserDetail.isPresent()) {
-                                System.out.println("************* I also Got the user");
-                                UserDetail userDetail = optionalUserDetail.get();
-                                // Extract the username from the UserDetail entity
-                                String username = userDetail.getFname();
 
-                                // Create the AnswerResponse object
-                                AnswerResponse response = AnswerResponse.builder()
-                                        .id(answer.getId())
-                                        .name(username)
-                                        .answers_text(answer.getAnswers_text())
-                                        .date(answer.getDate())
-                                        .flag(answer.getFlag())
-                                        .upvotes(answer.getUpvotes())
-                                        .build();
-                                answerResponses.add(response);
-                            }
-                        }
-                        return Optional.of(answerResponses);
-                    } else {
-                        // If no responses found for the given question ID, return Optional.empty()
-                        return Optional.empty();
-                    }
-                } catch (Exception e) {
-                    // Handle any exceptions and log the error
-                    e.printStackTrace();
-                    return Optional.empty();
-                }
+    public String deleteFlaggedQuestion(int questionId){
+                 Optional<Question> optionalQuestion = questionRepository.findById(questionId);
+                 if(optionalQuestion.isPresent()){
+                     Question question = optionalQuestion.get();
+                     if(question.getFlag() == 1){
+                         question.setStatus(false);
+                         questionRepository.save(question);
+                         return "Question with id "+ questionId + "is deleted Successfully";
+                     }
+                     else{
+                         return "Question with ID " + questionId + " is not flagged!";
+                     }
+
+                 }
+                 else {
+                     // If the question ID is not found, return an error message
+                     return "Question with ID " + questionId + " not found!";
+                 }
             }
+    public Optional<List<AnswerResponse>> getAllResponses(int questionId) {
+        try {
+            var ques = questionRepository.findById(questionId).orElseThrow(() -> new RuntimeException("Question not found"));
+            System.out.println("****************  Question id is  : " + questionId + " " + ques.getQuestionText());
+            Optional<List<Answers>> optionalAnswers = Optional.ofNullable(answersRepository.findByQuestionid(ques));
+            if (optionalAnswers.isPresent()) {
+                System.out.println("Heyyyyyyyyyyyyyyyyyyyy I got Some Answers");
+                List<AnswerResponse> answerResponses = new ArrayList<>();
+                List<Answers> answers = optionalAnswers.get();
+                for (Answers answer : answers) {
+                    if (answer.isStatus()) { // Check if status is true
+                        // Retrieve the UserDetail entity corresponding to the answer's u_id
+                        System.out.println(answer.getAnswers_text());
+                        Optional<UserDetail> optionalUserDetail = userDetailRepository.findByUid(answer.getU_id());
+                        if (optionalUserDetail.isPresent()) {
+                            System.out.println("************* I also Got the user");
+                            UserDetail userDetail = optionalUserDetail.get();
+                            // Extract the username from the UserDetail entity
+                            String username = userDetail.getFname();
+
+                            // Create the AnswerResponse object
+                            AnswerResponse response = AnswerResponse.builder()
+                                    .id(answer.getId())
+                                    .name(username)
+                                    .answers_text(answer.getAnswers_text())
+                                    .date(answer.getDate())
+                                    .flag(answer.getFlag())
+                                    .upvotes(answer.getUpvotes())
+                                    .build();
+                            answerResponses.add(response);
+                        }
+                    }
+                }
+                return Optional.of(answerResponses);
+            } else {
+                // If no responses found for the given question ID, return Optional.empty()
+                return Optional.empty();
+            }
+        } catch (Exception e) {
+            // Handle any exceptions and log the error
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+    public String deleteFlaggedAnswer(Integer answerId) {
+        Optional<Answers> optionalAnswer = answersRepository.findById(answerId);
+        if (optionalAnswer.isPresent()) {
+            Answers answer = optionalAnswer.get();
+            if (answer.getFlag() == 1) {
+                // Set the status or perform deletion logic here
+                answer.setStatus(false);
+                answersRepository.save(answer);
+                return "Answer with id " + answerId + " is deleted Successfully";
+            } else {
+                return "Answer with id " + answerId + " is not flagged, cannot delete";
+            }
+        } else {
+            return "Answer not found with id " + answerId;
+        }
+    }
 }

@@ -73,7 +73,19 @@ public class  QansController {
 
     @GetMapping("/responses/{questionId}")
     public Optional<List<AnswerResponse>> getAllResponses(@PathVariable Integer questionId){
-        Optional<List<AnswerResponse>> responses = service.getAllResponses(questionId);
-        return responses;
+        Optional<List<AnswerResponse>> response = service.getAllResponses(questionId);
+        return response;
     }
+
+    @PostMapping("/deleteQuestion/{questionId}")
+    public ResponseEntity<String> deleteFlaggedQuestion(@PathVariable Integer questionId){
+        String result = service.deleteFlaggedQuestion(questionId);
+        return ResponseEntity.ok(result);
+    }
+    @PostMapping("/deleteresponse/{answerId}")
+    public ResponseEntity<String> deleteFlaggedAnswer(@PathVariable Integer answerId) {
+        String result = service.deleteFlaggedAnswer(answerId);
+        return ResponseEntity.ok(result);
+    }
+
 }

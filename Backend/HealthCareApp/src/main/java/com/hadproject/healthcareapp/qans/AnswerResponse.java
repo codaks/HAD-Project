@@ -32,4 +32,6 @@ public class AnswerResponse {
     @JsonProperty("upvote")
     private int upvotes;
 
+
+
 }

@@ -13,7 +13,5 @@ public class QuestionRequest {
     private int uid;
     private String question_text;
     private String tags;
-    private int flag;
-
 }
 

@@ -13,6 +13,4 @@ public class AnsRequest {
     private int q_id;
     private int uid;
     private String answers_text;
-    private int flag;
-
 }

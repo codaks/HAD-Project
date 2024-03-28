@@ -57,4 +57,5 @@ public class UserDetail {
     private String dob;
     @Column(nullable = false)
     private String dor;
+
 }

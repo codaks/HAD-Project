@@ -2,19 +2,23 @@ package com.hadproject.healthcareapp.admin;
 
 
 import com.hadproject.healthcareapp.user.*;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.Period;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-
+@Builder
 @RequiredArgsConstructor
 public class AdminService {
 
@@ -110,42 +114,74 @@ public class AdminService {
 //            return Optional.empty();
 //        }
 //    }
-//public Optional<RoleProfileResponse> viewProfileDetails(Integer userId) {
-//    try {
-//        Optional<User> userOptional = userRepository.findById(userId);
-//        if (userOptional.isPresent()) {
-//            User user = userOptional.get();
-//            // It's better to use .findById() and then .orElseThrow() for clarity and safety.
-//            UserDetail userDetail = userDetailsRepository.findByUid(user)
-//                    .orElseThrow(() -> new NoSuchElementException("UserDetail not found for id: " + user.getId()));
-//
-//            // Ensure dob is in a proper format or handle the parsing in a try-catch block if necessary.
-//            LocalDate dob = LocalDate.parse(userDetail.getDob());
-//            int age = Period.between(dob, LocalDate.now()).getYears();
-//
-//            String address = String.format("%s, %s %s, %s, %s, %d",
-//                    userDetail.getHno(), userDetail.getStreet1(), userDetail.getStreet2(),
-//                    userDetail.getCity(), userDetail.getState(), userDetail.getPin_Code());
-//
-//            return Optional.of(RoleProfileResponse.builder()
-//                    .name(userDetail.getFname() + " " + userDetail.getLname())
-//                    .Joined_Since(userDetail.getDor())
-//                    .Age(age)
-//                    .contact_no(userDetail.getMobile())
-//                    .gender(userDetail.getGender())
-//                    .Address(address)
-//                    .DateOfBirth(userDetail.getDob())
-//                    .build());
-//        }
-//    } catch (Exception e) {
-//        // Log the exception and handle it as needed
-//        // For example, you might log the error and return an empty Optional
-//        System.err.println("Error processing viewProfileDetails: " + e.getMessage());
-//        e.printStackTrace();
-//    }
-//    return Optional.empty(); // Return an empty Optional in case of any failure
-//}
 
+    public Optional<RoleProfileResponse> viewProfileDetails(Integer userId) {
+        try {
+            System.out.println("************************  Inside The View Profile Data   ************************");
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                UserDetail userDetail = userDetailsRepository.findByUid(user)
+                        .orElseThrow(() -> new NoSuchElementException("UserDetail not found for id: " + user.getId()));
+
+                // Check if the date string includes a time component
+                String dobString = userDetail.getDob();
+                LocalDate dob;
+                if (dobString.length() > 10) {
+                    // Date string includes time component
+                    LocalDateTime dobDateTime = LocalDateTime.parse(dobString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS"));
+                    dob = dobDateTime.toLocalDate();
+                } else {
+                    // Date string is in "yyyy-MM-dd" format
+                    dob = LocalDate.parse(dobString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                }
+
+                int age = Period.between(dob, LocalDate.now()).getYears();
+
+                String address = String.format("%s, %s %s, %s, %s, %d",
+                        userDetail.getHno(), userDetail.getStreet1(), userDetail.getStreet2(),
+                        userDetail.getCity(), userDetail.getState(), userDetail.getPin_Code());
+
+                return Optional.of(RoleProfileResponse.builder()
+                        .name(userDetail.getFname() + " " + userDetail.getLname())
+                        .Joined_Since(userDetail.getDor())
+                        .Age(age)
+                        .contact_no(userDetail.getMobile())
+                        .gender(userDetail.getGender())
+                        .Address(address)
+                        .DateOfBirth(userDetail.getDob())
+                        .build());
+            }
+        } catch (DateTimeParseException e) {
+            // Log the parsing error and handle it
+            System.err.println("Error parsing date: " + e.getMessage());
+        } catch (Exception e) {
+            // Log the exception and handle it as needed
+            System.err.println("Error processing viewProfileDetails: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return Optional.empty(); // Return an empty Optional in case of any failure
+    }
+
+
+    public String removeUserDetails(Integer userId){
+        try {
+            // Find the user by ID
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                // Set user status to false
+                user.setActive(false); // Assuming there's a setStatus method to set the user's status
+                userRepository.save(user); // Save the user back to the database with updated status
+                return "User status set to false successfully.";
+            } else {
+                return "User not found.";
+            }
+        } catch (Exception e) {
+            return "Error updating user status: " + e.getMessage();
+        }
+
+    }
 
 
     }
