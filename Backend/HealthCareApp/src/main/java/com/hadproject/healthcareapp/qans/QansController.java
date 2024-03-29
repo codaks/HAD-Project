@@ -72,6 +72,14 @@ public class  QansController {
     }
 
 
+    @GetMapping("/getQuestion/{questionId}")
+    public ResponseEntity<String>  getQuestionByID(@PathVariable Integer questionId){
+        String  response = service.getQuestionByID(questionId);
+        return ResponseEntity.ok(response);
+    }
+
+
+
     @GetMapping("/responses/{questionId}")
     public Optional<List<AnswerResponse>> getAllResponses(@PathVariable Integer questionId){
         Optional<List<AnswerResponse>> response = service.getAllResponses(questionId);
@@ -88,5 +96,8 @@ public class  QansController {
         String result = service.deleteFlaggedAnswer(answerId);
         return ResponseEntity.ok(result);
     }
+
+
+
 
 }

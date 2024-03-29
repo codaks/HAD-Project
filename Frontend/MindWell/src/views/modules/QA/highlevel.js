@@ -1,9 +1,63 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+import { useNavigate, Link } from 'react-router-dom'
 import { Col, Row, Card, Form, FormControl, Button } from "react-bootstrap";
-
+import axiosInstance from '../../../axiosInstance';
 const HighLevel = () => {
   // State to hold the search query
+
   const [searchQuery, setSearchQuery] = React.useState("");
+
+  const [questions, setQuestions] = React.useState([{
+    id: 0,
+    QuestionText: ""
+  }]);
+
+  const [addedQuestion, setAddedQuestion] = React.useState({
+    uid: "",
+    question_text: "",
+    tags: "Medical"
+  });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+    const checkEligiblity = async () => {
+      const accessToken = localStorage.getItem('access_token');
+      const userid = localStorage.getItem('id');
+      setAddedQuestion({ ...addedQuestion, uid: userid });
+
+      if (accessToken === null) {
+        navigate('/sign-in');
+      }
+    }
+
+    const fetchQuestions = async () => {
+      const accessToken = localStorage.getItem('access_token');
+
+      try {
+
+        const headers = {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${accessToken}`,
+        };
+
+        axiosInstance.get('/qaresponse/allQuestions', { headers: headers }).then((response) => {
+          console.log("Admins: ", response.data);
+          setQuestions(response.data);
+        });
+
+      }
+      catch (error) {
+        console.error('Error fetching data:', error);
+      }
+
+    }
+    if (checkEligiblity())
+      fetchQuestions();
+  }, [navigator]);
+
 
   // Function to handle search query change
   const handleSearchChange1 = (event) => {
@@ -11,7 +65,7 @@ const HighLevel = () => {
   };
 
   // Function to handle search form submission
-  const handleSearchSubmit1= (event) => {
+  const handleSearchSubmit1 = (event) => {
     event.preventDefault();
     // Perform search logic here
     console.log("Search Query:", searchQuery);
@@ -22,24 +76,56 @@ const HighLevel = () => {
   };
 
   // Function to handle search form submission
-  const handleSearchSubmit2= (event) => {
+  const handleSearchSubmit2 = (event) => {
     event.preventDefault();
     // Perform search logic here
     console.log("Search Query:", searchQuery);
   };
 
-  const handleSearchSubmit3= (event) => {
+  const handleSearchSubmit3 = (event) => {
     event.preventDefault();
     // Perform search logic here
     console.log("Search Query:", searchQuery);
   };
 
-  const questions = [
-    "How to format a hard drive?",
-    "What are the benefits of using React?",
-    "How to deploy a React app?",
-    "What are the different types of sorting algorithms?",
-  ];
+  const handleOnChangeAddQuestion = (event) => {
+    event.preventDefault();
+
+    setAddedQuestion({
+      ...addedQuestion,
+      question_text: event.target.value,
+
+    });
+    console.log("Added Question: ", addedQuestion);
+  };
+
+
+  const handleAddQuestionSubmit = (event) => {
+    event.preventDefault();
+    const accessToken = localStorage.getItem('access_token');
+    try {
+
+      const headers = {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${accessToken}`,
+      };
+
+
+      axiosInstance.post('/qaresponse/addquestion', addedQuestion, { headers: headers }).then((response) => {
+        console.log("Status", response.data);
+        axiosInstance.get('/qaresponse/allQuestions', { headers: headers }).then((response) => {
+          console.log("Admins: ", response.data);
+          setQuestions(response.data);
+        });
+      });
+
+
+    }
+    catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   return (
     <Fragment>
@@ -59,14 +145,14 @@ const HighLevel = () => {
             </Button>
           </Form>
         </Row>
-             <Row className="justify-content-end mb-3">
-          <Form className="d-flex" onSubmit={handleSearchSubmit2}>
+        <Row className="justify-content-end mb-3">
+          <Form className="d-flex" onSubmit={handleAddQuestionSubmit}>
             <FormControl
-              type="search"
+              type="text"
               placeholder="Add a question"
               className="me-2 rounded-pill"
-              aria-label="Search"
-              onChange={handleSearchChange2}
+              aria-label="Question"
+              onChange={handleOnChangeAddQuestion}
             />
             <Button variant="primary" className="me-1 rounded-pill" type="submit">
               Add
@@ -78,13 +164,15 @@ const HighLevel = () => {
         {/* Map over the questions array */}
         {questions.map((question, index) => (
           <div key={index}>
-            <Card className="iq-mb-2" style={{ borderRadius: "10px" }}>
-              <Card.Body>
-                <Card.Text>
-                  {index + 1}. {question}
-                </Card.Text>
-              </Card.Body>
-            </Card>
+            <Link to={`/home/answers/${question.id}`}>
+              <Card className="iq-mb-2" style={{ borderRadius: "10px" }}>
+                <Card.Body>
+                  <Card.Text>
+                    {index + 1}. {question.QuestionText}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Link>
             {/* Add spacing between cards */}
             {index !== questions.length - 1 && <div style={{ marginBottom: "8px" }} />}
           </div>

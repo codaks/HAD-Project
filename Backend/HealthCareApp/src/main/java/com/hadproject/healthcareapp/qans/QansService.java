@@ -21,7 +21,7 @@ public class QansService {
 
     public String postQuestion(QuestionRequest request){
         var user = userRepository.findById(request.getUid()).orElseThrow(() -> new RuntimeException("User not found"));
-
+        System.out.println("My User Detial"+user.getUsername());
         var question = Question.builder()
                 .u_id(user)
                 .QuestionText(request.getQuestion_text())
@@ -245,5 +245,16 @@ public class QansService {
         } else {
             return "Answer not found with id " + answerId;
         }
+    }
+
+    public String getQuestionByID(Integer questionID){
+        try{
+            var ques = questionRepository.findById(questionID).orElseThrow(() -> new RuntimeException("Question not found"));
+            return ques.getQuestionText();
+        }
+        catch (Exception e){
+            System.out.println(e+"");
+        }
+        return "";
     }
 }

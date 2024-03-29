@@ -1,12 +1,54 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Col, Row, Card, Button, Image } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { useParams, useNavigate } from 'react-router-dom';
+import { use } from "echarts";
+import axiosInstance from '../../../axiosInstance';
 
 const LowLevel = () => {
   // Array to store answers and their like counts along with the user who answered
+  let { qid } = useParams();
+
+  const navigate = useNavigate();
+  const [question, setQuestion] = useState();
+  useEffect(() => {
+
+    const checkEligiblity = async () => {
+      const accessToken = localStorage.getItem('access_token');
+      const userid = localStorage.getItem('id');
+
+      if (accessToken === null) {
+        navigate('/sign-in');
+      }
+    }
+
+    const fetchQuestion = async () => {
+      const accessToken = localStorage.getItem('access_token');
+
+      try {
+
+        const headers = {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${accessToken}`,
+        };
+
+        axiosInstance.get(`/qaresponse/getQuestion/${qid}`, { headers: headers }).then((response) => {
+          console.log("Admins: ", response.data);
+          setQuestion(response.data);
+        });
+
+      }
+      catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+    checkEligiblity();
+    fetchQuestion();
+  }, [navigate]);
   const [answers, setAnswers] = useState([
     {
       text: "Depression is a lifelong condition, as there is no cure. However, this does not necessarily mean that it will affect a person every day of their life. With the right treatment plan, remission is possible. The treatment plan may need adjusting throughout a person's life",
@@ -48,14 +90,14 @@ const LowLevel = () => {
   return (
     <Fragment>
       <div className="mb-3">
-        <h4 className="mb-2">Question:</h4>
+        <h4 className="mb-2">Question: Question id is : {qid}</h4>
         <div className="px-3 mb-3">
           {" "}
           {/* Add padding */}
           <Card className="w-100">
             <Card.Body>
               <Card.Text as="h4">
-                When a cure for Chronic depression would be found?
+                {question}
               </Card.Text>
             </Card.Body>
           </Card>
@@ -103,10 +145,10 @@ const LowLevel = () => {
                   Flag Answer
                 </Button>
                 <Button variant="primary" className="me-1 mb-3">
-                 <FontAwesomeIcon icon={faThumbsUp} className="me-1" />
+                  <FontAwesomeIcon icon={faThumbsUp} className="me-1" />
                   Upvote
-                 </Button>
-          
+                </Button>
+
                 {/* Like count */}
                 <span className="ms-2">Upvotes: {answer.likes}</span>
               </div>
