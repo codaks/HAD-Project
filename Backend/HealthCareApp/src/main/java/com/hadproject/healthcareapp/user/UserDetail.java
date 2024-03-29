@@ -25,7 +25,7 @@ public class UserDetail {
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "uid")
     private User uid;
     @Column(nullable = false)
     private String fname;
@@ -51,10 +51,11 @@ public class UserDetail {
     private String Country;
     @Column(nullable = false)
     private String District;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String Mobile;
     @Column(nullable = false)
     private String dob;
     @Column(nullable = false)
     private String dor;
+
 }

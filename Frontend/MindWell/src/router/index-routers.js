@@ -3,6 +3,8 @@ import DefaultLayout from "../layouts/default-layout"
 
 // pages
 import Index from '../views/index'
+import AdminDashboard from "../views/AdminDashboard";
+import AdminProfile from "../views/AdminProfile";
 import DashboardOne from '../views/dashboard-1';
 import DashboardTwo from "../views/dashboard-2";
 import DashboardThree from "../views/dashboard-3";
@@ -57,7 +59,12 @@ import Pricing from "../views/modules/extra-pages/pricing";
 import PricingOne from "../views/modules/extra-pages/pricing-1";
 import Faq from "../views/modules/extra-pages/faq";
 import AccountSetting from "../views/modules/extra-pages/account-setting";
-
+//Main pages
+import HighLevel from "../views/modules/QA/highlevel";
+import Lowlevel from "../views/modules/QA/lowlevel";
+import Blogs1 from "../views/modules/QA/blogs1";
+import Blogs2 from "../views/modules/QA/blogs2";
+import Addblogs from "../views/modules/QA/addblogs";
 // Map
 import Google from "../views/modules/maps/google";
 import VectorMap from "../views/modules/maps/vector";
@@ -73,6 +80,10 @@ import EChartPage from "../views/modules/charts/eChart";
 import AmCharts from "../views/modules/charts/amChart";
 import ChartJsPage from "../views/modules/charts/chartJs";
 import PrivacySetting from "../views/modules/extra-pages/privacy-setting";
+
+
+
+
 import { Navigate } from "react-router-dom";
 export const IndexRouters = [
     {
@@ -86,6 +97,14 @@ export const IndexRouters = [
             {
                 path: 'home',
                 element : <Index />,
+            },
+            {
+                path:'AdminDashboard',
+                element:<AdminDashboard/>
+            },
+            {
+                path:'AdminProfile',
+                element:<AdminProfile/>
             },
             {
                 path:'dashboard-1',
@@ -335,7 +354,27 @@ export const IndexRouters = [
                 path:'unicons',
                 element:<UnIconsPage/>
             },
-            
+            {
+                path:'questions',
+                element:<HighLevel/>
+            },
+            {
+                path:'answers',
+                element:<Lowlevel/>
+            },
+            {
+                path:'blogs1',
+                element:<Blogs1/>
+            },
+            {
+                path:'blogs2',
+                element:<Blogs2/>
+            },
+            {
+                path:'addblogs',
+                element:<Addblogs/>
+            },
+
             ...AppRouter
         ],
     }

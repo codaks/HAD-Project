@@ -53,34 +53,34 @@ const VerticalNav = memo(() => {
             <i className="ri-subtract-line"></i>
             <span>Dashboard</span>
           </li>
-          <SidebarMenu isTag="true" pathname="/" title="Doctor Dashboard">
+          <SidebarMenu isTag="true" pathname="/home/home" title="Doctor Dashboard">
             <i className="ri-hospital-fill"></i>
           </SidebarMenu>
 
           <SidebarMenu
             isTag="true"
-            pathname="/dashboard-1"
+            pathname="/home/dashboard-1"
             title="Hospital Dashboard 1 "
           >
             <i className="ri-home-8-fill"></i>
           </SidebarMenu>
           <SidebarMenu
             isTag="true"
-            pathname="/dashboard-2"
+            pathname="/home/dashboard-2"
             title="Hospital Dashboard 2"
           >
             <i className="ri-briefcase-4-fill"></i>
           </SidebarMenu>
           <SidebarMenu
             isTag="true"
-            pathname="/dashboard-3"
+            pathname="/home/dashboard-3"
             title="Patient Dashboard"
           >
             <i className="ri-group-fill"></i>
           </SidebarMenu>
           <SidebarMenu
             isTag="true"
-            pathname="/dashboard-4"
+            pathname="/home/dashboard-4"
             title="Covid-19 Dashboard"
             isNew="true"
           >
@@ -116,14 +116,14 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-inbox-fill"
-                  pathname="/app/email"
+                  pathname="/home/app/email"
                   title="Inbox"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-edit-2-fill"
-                  pathname="/app/email-compose"
+                  pathname="/home/app/email-compose"
                   title="Email Compose"
                 ></SidebarMenu>
               </ul>
@@ -157,28 +157,28 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-file-list-fill"
-                  pathname="/all-doctors"
+                  pathname="/home/all-doctors"
                   title="All Doctors"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-user-add-fill"s
-                  pathname="/add-doctors"
+                  pathname="/home/add-doctors"
                   title="Add Doctors"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-profile-fill"
-                  pathname="/doctors-profile"
+                  pathname="/home/doctors-profile"
                   title="Doctors Profile"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-file-edit-fill"
-                  pathname="/edit-doctors"
+                  pathname="/home/edit-doctors"
                   title="Edit Doctors"
                 ></SidebarMenu>
               </ul>
@@ -186,11 +186,11 @@ const VerticalNav = memo(() => {
           </Accordion.Item>
           {/* Doctors menu End */}
           {/* Calendar */}
-          <SidebarMenu isTag="true" pathname="/calendar" title="Calendar">
+          <SidebarMenu isTag="true" pathname="/home/calendar" title="Calendar">
             <i className="ri-calendar-event-fill"></i>
           </SidebarMenu>
           {/* Chat */}
-          <SidebarMenu isTag="true" pathname="/chat" title="Chat">
+          <SidebarMenu isTag="true" pathname="/home/chat" title="Chat">
             <i className="ri-message-fill"></i>
           </SidebarMenu>
           <li className="iq-menu-title">
@@ -224,140 +224,140 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-font-color"
-                  pathname="/ui-colors"
+                  pathname="/home/ui-colors"
                   title="Colors"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-text"
-                  pathname="/ui-typography"
+                  pathname="/home/ui-typography"
                   title="Typography"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-alert-fill"
-                  pathname="/ui-alerts"
+                  pathname="/home/ui-alerts"
                   title="Alerts"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-building-3-fill"
-                  pathname="/ui-badges"
+                  pathname="/home/ui-badges"
                   title="Badges"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-guide-fill"
-                  pathname="/ui-breadcrumb"
+                  pathname="/home/ui-breadcrumb"
                   title="Breadcrumb"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-checkbox-blank-fill"
-                  pathname="/ui-button"
+                  pathname="/home/ui-button"
                   title="Button"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-bank-card-fill"
-                  pathname="/ui-cards"
+                  pathname="/home/ui-cards"
                   title="Cards"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-slideshow-4-fill"
-                  pathname="/ui-carousel"
+                  pathname="/home/ui-carousel"
                   title="Carousel"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-movie-fill"
-                  pathname="/ui-video"
+                  pathname="/home/ui-video"
                   title="Video"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-grid-fill"
-                  pathname="/ui-grid"
+                  pathname="/home/ui-grid"
                   title="Grid"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-image-fill"
-                  pathname="/ui-image"
+                  pathname="/home/ui-image"
                   title="Image"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-file-list-fill"
-                  pathname="/ui-list-group"
+                  pathname="/home/ui-list-group"
                   title="List Group"
                 ></SidebarMenu>
                 {/* <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-camera-fill"
-                  pathname="/ui-media"
+                  pathname="/home/ui-media"
                   title="Media"
                 ></SidebarMenu> */}
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-checkbox-blank-fill"
-                  pathname="/ui-modal"
+                  pathname="/home/ui-modal"
                   title="Modal"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-notification-3-fill"
-                  pathname="/ui-notifications"
+                  pathname="/home/ui-notifications"
                   title="Notifications"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-more-fill"
-                  pathname="/ui-paginations"
+                  pathname="/home/ui-paginations"
                   title="Paginations"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-folder-shield-fill"
-                  pathname="/ui-popovers"
+                  pathname="/home/ui-popovers"
                   title="Popovers"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-battery-low-fill"
-                  pathname="/ui-progressbar"
+                  pathname="/home/ui-progressbar"
                   title="Progressbars"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-database-fill"
-                  pathname="/ui-tabs"
+                  pathname="/home/ui-tabs"
                   title="Tabs"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-record-mail-fill"
-                  pathname="/ui-tooltips"
+                  pathname="/home/ui-tooltips"
                   title="Tooltips"
                 ></SidebarMenu>
               </ul>
@@ -392,35 +392,35 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-tablet-fill"
-                  pathname="/form-elements"
+                  pathname="/home/form-elements"
                   title="Form Elements"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-device-fill"
-                  pathname="/form-validation"
+                  pathname="/home/form-validation"
                   title="Form Validation"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-toggle-fill"
-                  pathname="/form-switch"
+                  pathname="/home/form-switch"
                   title="Form Switch"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-chat-check-fill"
-                  pathname="/form-Checkbox"
+                  pathname="/home/form-Checkbox"
                   title="Form Checkbox"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-radio-button-fill"
-                  pathname="/form-radio"
+                  pathname="/home/form-radio"
                   title="Form Radio"
                 ></SidebarMenu>
               </ul>
@@ -454,21 +454,21 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-anticlockwise-fill"
-                  pathname="/simple-wizard"
+                  pathname="/home/simple-wizard"
                   title="Simple Wizard"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-anticlockwise-2-fill"
-                  pathname="/validate-wizard"
+                  pathname="/home/validate-wizard"
                   title="Validate Wizard"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-clockwise-fill"
-                  pathname="/vertical-wizard"
+                  pathname="/home/vertical-wizard"
                   title="Vertical Wizard"
                 ></SidebarMenu>
               </ul>
@@ -502,21 +502,21 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-table-fill"
-                  pathname="/basic-table"
+                  pathname="/home/basic-table"
                   title="Basic Table"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-table-2"
-                  pathname="/data-table"
+                  pathname="/home/data-table"
                   title="Data Table"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-archive-drawer-fill"
-                  pathname="/editable-table"
+                  pathname="/home/editable-table"
                   title="Editable Table"
                 ></SidebarMenu>
               </ul>
@@ -550,21 +550,21 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-file-chart-fill"
-                  pathname="/chartjs"
+                  pathname="/home/chartjs"
                   title="ChartJS"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-bar-chart-fill"
-                  pathname="/e-chart"
+                  pathname="/home/e-chart"
                   title="E-Chart"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-pie-chart-box-fill"
-                  pathname="/apex-chart"
+                  pathname="/home/apex-chart"
                   title="Apex Chart"
                 ></SidebarMenu>
               </ul>
@@ -598,35 +598,35 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-stack-fill"
-                  pathname="/dripicons"
+                  pathname="/home/dripicons"
                   title="Dripicons"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-facebook-fill"
-                  pathname="/font-awesome"
+                  pathname="/home/font-awesome"
                   title="Font Awesome"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-keynote-fill"
-                  pathname="/line-awesome"
+                  pathname="/home/line-awesome"
                   title="Line Awesome"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-remixicon-fill"
-                  pathname="/remixicon"
+                  pathname="/home/remixicon"
                   title="Remixicon"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-underline"
-                  pathname="/unicons"
+                  pathname="/home/unicons"
                   title="Unicons"
                 ></SidebarMenu>
               </ul>
@@ -667,35 +667,35 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-login-box-fill"
-                  pathname="/sign-in"
+                  pathname="/home/sign-in"
                   title="Login"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-logout-box-fill"
-                  pathname="/sign-up"
+                  pathname="/home/sign-up"
                   title="Register"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-record-mail-fill"
-                  pathname="/recover-password"
+                  pathname="/home/recover-password"
                   title="Recover Password"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-chat-check-fill"
-                  pathname="/confirm-mail"
+                  pathname="/home/confirm-mail"
                   title="Confirm Mail"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-file-lock-fill"
-                  pathname="/lock-screen"
+                  pathname="/home/lock-screen"
                   title="Lock Scresn"
                 ></SidebarMenu>
               </ul>
@@ -729,14 +729,14 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-google-fill"
-                  pathname="/google-map"
+                  pathname="/home/google-map"
                   title="Google"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-map-pin-range-line"
-                  pathname="/vector-map"
+                  pathname="/home/vector-map"
                   title="Vector"
                 ></SidebarMenu>
               </ul>
@@ -770,70 +770,70 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-map-pin-time-fill"
-                  pathname="/timeline"
+                  pathname="/home/timeline"
                   title="Timeline"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-question-answer-fill"
-                  pathname="/invoice"
+                  pathname="/home/invoice"
                   title="Invoice"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-checkbox-blank-fill"
-                  pathname="/blank-page"
+                  pathname="/home/blank-page"
                   title="Blank Page"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-error-warning-fill"
-                  pathname="/error-404"
+                  pathname="/home/error-404"
                   title="Error 404"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-error-warning-fill"
-                  pathname="/error-500"
+                  pathname="/home/error-500"
                   title="Error 500"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-price-tag-3-fill"
-                  pathname="/pricing"
+                  pathname="/home/pricing"
                   title="Pricing"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-price-tag-2-fill"
-                  pathname="/pricing-1"
+                  pathname="/home/pricing-1"
                   title="Pricing 1"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-git-repository-commits-fill"
-                  pathname="/maintenance"
+                  pathname="/home/maintenance"
                   title="Maintenance"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-run-fill"
-                  pathname="/coming-soon"
+                  pathname="/home/coming-soon"
                   title="Coming Soon"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-compasses-2-fill"
-                  pathname="/faq"
+                  pathname="/home/faq"
                   title="Faq"
                 ></SidebarMenu>
               </ul>
@@ -867,21 +867,21 @@ const VerticalNav = memo(() => {
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-record-circle-line"
-                  pathname="#"
+                  pathname="/home#"
                   title="Menu 1"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-record-circle-line"
-                  pathname="#"
+                  pathname="/home#"
                   title="Menu 2"
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-record-circle-line"
-                  pathname="#"
+                  pathname="/home#"
                   title="Menu 3"
                 ></SidebarMenu>
               </ul>

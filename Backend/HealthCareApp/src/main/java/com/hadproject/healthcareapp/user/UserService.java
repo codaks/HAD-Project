@@ -20,6 +20,7 @@ public class UserService {
 
     @Autowired
     private OtpUtil otpUtil;
+
     @Autowired
     private EmailUtil emailUtil;
 
@@ -47,6 +48,7 @@ public class UserService {
 
     public String sendotp(OtpDto otpDto) {
         String otp = otpUtil.generateOtp();
+        System.out.println("************************I got the email as "+otpDto.getEmail());
         try {
             emailUtil.sendOtpEmail(otpDto.getEmail(), otp);
         } catch (MessagingException e) {
@@ -54,14 +56,13 @@ public class UserService {
         }
         User user = repository.findByEmail(otpDto.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found with this email: " + otpDto.getEmail()));
+
         // user.setName(registerDto.getName());
 
         user.setOtp(otp);
         user.setOtpGeneratedTime(LocalDateTime.now());
         repository.save(user);
-//        System.out.println("**********************OTP**************************");
-//        System.out.println(otp);
-//        System.out.println("**********************OTP**************************");
+
         return "Send Otp successfully";
 
     }
@@ -75,7 +76,7 @@ public class UserService {
         System.out.println("****************************************");
         System.out.println("Get the User");
         System.out.println("****************************************");
-
+        System.out.println("user DEtails: "+user.getEmail());
         if (user.getOtp().equals(otp) && Duration.between(user.getOtpGeneratedTime(),
                 LocalDateTime.now()).getSeconds() < (2 * 60)) {
             user.setActive(true);
