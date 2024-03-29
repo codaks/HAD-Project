@@ -22,6 +22,7 @@ public class  QansController {
     public ResponseEntity<String> postQuestion(@RequestBody QuestionRequest request) {
         String result = service.postQuestion(request);
         return ResponseEntity.ok(result);
+
     }
 
     @PostMapping("/postresponse")
