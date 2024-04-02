@@ -1,14 +1,15 @@
 package com.hadproject.healthcareapp.qans;
 
-import com.hadproject.healthcareapp.user.User;
 import com.hadproject.healthcareapp.user.UserDetail;
 import com.hadproject.healthcareapp.user.UserDetailRepository;
 import com.hadproject.healthcareapp.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -20,6 +21,7 @@ public class QansService {
     private final UserDetailRepository userDetailRepository;
 
     public String postQuestion(QuestionRequest request){
+        System.out.println("***********************************************    "+request.getUid());
         var user = userRepository.findById(request.getUid()).orElseThrow(() -> new RuntimeException("User not found"));
         System.out.println("My User Detial"+user.getUsername());
         var question = Question.builder()
@@ -122,44 +124,44 @@ public class QansService {
         return flaggedAnswerResponses;
 
     }
-    public List<QuestionResponse> getAllFlaggedQuestions() {
+    public List<AllQuestionsResponse> getAllFlaggedQuestions() {
         List<Question> flaggedQuestions = questionRepository.findByFlag(1); // Assuming flag value of true represents flagged questions
-        List<QuestionResponse> QuestionResponses = new ArrayList<>();
+        List<AllQuestionsResponse> allQuestionsRespons = new ArrayList<>();
 
         if (flaggedQuestions != null && !flaggedQuestions.isEmpty()) {
             for (Question question : flaggedQuestions) {
-                QuestionResponse response = QuestionResponse.builder()
+                AllQuestionsResponse response = AllQuestionsResponse.builder()
                         .id(question.getId())
                         .QuestionText(question.getQuestionText())
                         .build();
-                QuestionResponses.add(response);
+                allQuestionsRespons.add(response);
             }
         } else {
             // Handle the case when no flagged questions are found
             // For example, you can return an empty list
             return Collections.emptyList();
         }
-        return QuestionResponses;
+        return allQuestionsRespons;
     }
 
-    public List<QuestionResponse>  getAllQuestion(){
+    public List<AllQuestionsResponse>  getAllQuestion(){
         List<Question> questions= questionRepository.findByStatus(true);
-        List<QuestionResponse> questionResponses = new ArrayList<>();
+        List<AllQuestionsResponse> allQuestionsRespons = new ArrayList<>();
 
         if(!questions.isEmpty()){
 
             for(Question question: questions){
-                QuestionResponse response = QuestionResponse.builder()
+                AllQuestionsResponse response = AllQuestionsResponse.builder()
                         .id(question.getId())
                         .QuestionText(question.getQuestionText())
                         .build();
-                questionResponses.add(response);
+                allQuestionsRespons.add(response);
             }
         }
         else{
             return Collections.emptyList();
         }
-        return questionResponses;
+        return allQuestionsRespons;
     }
 
 
@@ -204,13 +206,14 @@ public class QansService {
                             UserDetail userDetail = optionalUserDetail.get();
                             // Extract the username from the UserDetail entity
                             String username = userDetail.getFname();
-
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+                            LocalDateTime dateTime = LocalDateTime.parse(ques.getDate(), formatter);
                             // Create the AnswerResponse object
                             AnswerResponse response = AnswerResponse.builder()
                                     .id(answer.getId())
                                     .name(username)
                                     .answers_text(answer.getAnswers_text())
-                                    .date(answer.getDate())
+                                    .date(dateTime.toLocalDate()+"")
                                     .flag(answer.getFlag())
                                     .upvotes(answer.getUpvotes())
                                     .build();
@@ -247,14 +250,27 @@ public class QansService {
         }
     }
 
-    public String getQuestionByID(Integer questionID){
+    public Optional<QuestionResponse> getQuestionByID(Integer questionID){
         try{
+
             var ques = questionRepository.findById(questionID).orElseThrow(() -> new RuntimeException("Question not found"));
-            return ques.getQuestionText();
+            var userDetail = userDetailRepository.findByUid(ques.getU_id()).orElseThrow(()->new RuntimeException("USer not Found"));
+
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+            LocalDateTime dateTime = LocalDateTime.parse(ques.getDate(), formatter);
+
+            QuestionResponse questionResponse =QuestionResponse.builder()
+                    .question_text(ques.getQuestionText())
+                    .date_time(dateTime.toLocalDate()+" ")
+                    .posted_by(userDetail.getFname())
+                    .build();
+
+            return Optional.of(questionResponse);
         }
         catch (Exception e){
             System.out.println(e+"");
         }
-        return "";
+        return Optional.empty();
     }
 }

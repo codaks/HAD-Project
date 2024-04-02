@@ -136,7 +136,7 @@ const HighLevel = () => {
             <FormControl
               type="search"
               placeholder="Search your favourite blogs"
-              className="me-2 rounded-pill"
+              className="me-2 "
               aria-label="Search"
               onChange={handleSearchChange1}
             />
@@ -150,7 +150,7 @@ const HighLevel = () => {
             <FormControl
               type="text"
               placeholder="Add a question"
-              className="me-2 rounded-pill"
+              className="me-2 "
               aria-label="Question"
               onChange={handleOnChangeAddQuestion}
             />
@@ -159,7 +159,7 @@ const HighLevel = () => {
             </Button>
           </Form>
         </Row>
-
+        <br></br>
         <h4>Relevant Questions</h4>
         {/* Map over the questions array */}
         {questions.map((question, index) => (

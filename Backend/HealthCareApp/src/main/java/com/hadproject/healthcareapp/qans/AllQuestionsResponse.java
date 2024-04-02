@@ -1,19 +1,19 @@
 package com.hadproject.healthcareapp.qans;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionResponse {
+public class AllQuestionsResponse {
+    @JsonProperty("id")
+    private int id;
 
-    String question_text;
-    String posted_by;
-    String date_time;
+    @JsonProperty("QuestionText")
+    private String QuestionText;
 }

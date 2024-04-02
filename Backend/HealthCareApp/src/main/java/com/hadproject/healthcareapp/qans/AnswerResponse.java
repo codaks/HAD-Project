@@ -17,7 +17,7 @@ public class AnswerResponse {
     @JsonProperty("answer_id")
     private int id;
 
-    @JsonProperty("Answer posted by:")
+    @JsonProperty("answer_posted_by")
     private String name;
 
     @JsonProperty("answers_text")
@@ -31,7 +31,4 @@ public class AnswerResponse {
 
     @JsonProperty("upvote")
     private int upvotes;
-
-
-
 }

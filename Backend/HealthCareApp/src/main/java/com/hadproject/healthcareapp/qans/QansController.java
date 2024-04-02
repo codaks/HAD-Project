@@ -2,8 +2,6 @@ package com.hadproject.healthcareapp.qans;
 
 import java.util.List;
 
-import com.hadproject.healthcareapp.Courses.Courses;
-import com.hadproject.healthcareapp.employee.Employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,21 +58,21 @@ public class  QansController {
     }
 
     @GetMapping("/flaggedallquestions")
-    public ResponseEntity<List<QuestionResponse >> getAllFlaggedQuestions() {
-        List<QuestionResponse> flaggedQuestions = service.getAllFlaggedQuestions();
+    public ResponseEntity<List<AllQuestionsResponse>> getAllFlaggedQuestions() {
+        List<AllQuestionsResponse> flaggedQuestions = service.getAllFlaggedQuestions();
         return ResponseEntity.ok(flaggedQuestions);
     }
 
     @GetMapping("/allQuestions")
-    public ResponseEntity<List<QuestionResponse>>  getAllQuestion(){
-        List<QuestionResponse>  response = service.getAllQuestion();
+    public ResponseEntity<List<AllQuestionsResponse>>  getAllQuestion(){
+        List<AllQuestionsResponse>  response = service.getAllQuestion();
         return ResponseEntity.ok(response);
     }
 
 
     @GetMapping("/getQuestion/{questionId}")
-    public ResponseEntity<String>  getQuestionByID(@PathVariable Integer questionId){
-        String  response = service.getQuestionByID(questionId);
+    public ResponseEntity<Optional<QuestionResponse>>  getQuestionByID(@PathVariable Integer questionId){
+        Optional<QuestionResponse>  response = service.getQuestionByID(questionId);
         return ResponseEntity.ok(response);
     }
 
