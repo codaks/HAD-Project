@@ -10,55 +10,16 @@ import img from "../assets/images/user/11.png";
 //Buttons and Dropdown
 import { Button, ButtonGroup, Dropdown} from "react-bootstrap";
 
+//Cards
+import { Card, CardGroup, ListGroup } from 'react-bootstrap'
+
 //Axios
 import axios from 'axios';
 
-const AdminProfile = () => {
-    /*const [tableData, setTableData] = useState({
-        fname: "",
-        lname: "",
-        DOB: "",
-        DOR: "",
-        gender: "",
-        house_number: "",
-        street_1: "",
-        street_2: "",
-        city: "",
-        district: "",
-        state: "",
-        pincode: "",
-        mobile_number: "",
-    });
-
-    useEffect(() => {
-        // Fetch data from the backend here
-        fetchDataFromBackend()
-            .then(data => {
-                // Update the state with the fetched data
-                setTableData(data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }, []); // Empty dependency array ensures the effect runs only once after the initial render
-
-    // Function to fetch data from the backend (replace this with your actual fetch function)
-    const fetchDataFromBackend = async () => {
-        try {
-            const response = await fetch('backend-api-url');
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const data = await response.json();
-            return data; // Assuming data is in JSON format
-        } catch (error) {
-            throw new Error('Failed to fetch data');
-        }
-    }; */
-
+const PatientProfile = () => {
     return (
-    <Fragment>
-        <Row>
+        <Fragment>
+            <Row>
             <Col lg="4">  {/* Part 1 : Design of Left Side Part */}
             <div className="iq-card" style={{backgroundColor: '#ceebee'}}>
                 <div className="iq-card-body">
@@ -70,7 +31,23 @@ const AdminProfile = () => {
                         />
                     </div>
                     <div className="text-center mt-3">
-                        <div> <h4> <b>ADMIN</b> </h4> </div>
+                        <div> <h4> <b>PATIENT</b> </h4> </div>
+                        <div>
+                            <Table style={{marginTop: '20px' }}>
+                            <tr style={{color: '#000000'}}>
+                                <td style={{textAlign: 'left'}}> Height </td>
+                                <td style={{textAlign: 'left'}}> 5.3 inches </td>
+                            </tr>
+                            <tr style={{color: '#000000'}}>
+                                <td style={{textAlign: 'left'}}> Weight </td>
+                                <td style={{textAlign: 'left'}}> 55 kg </td>
+                            </tr>
+                            <tr style={{color: '#000000'}}>
+                                <td style={{textAlign: 'left'}}> Blood Group </td>
+                                <td style={{textAlign: 'left'}}> O +ve </td>
+                            </tr>
+                            </Table>
+                        </div>
                         <div style={{ marginTop: '20px' }}>
                         <Link to="/update-profile" className="btn btn-primary me-1 mb-3">
                             <i className="ri-bill-fill"></i>Update Profile
@@ -79,9 +56,44 @@ const AdminProfile = () => {
                     </div>
                 </div>
             </div>
+            <div className="iq-card" style={{backgroundColor: '#ceebee'}}>
+                <div className="iq-card-header d-flex justify-content-between">
+                    <div className="iq-header-title">
+                        <h4 className="card-title">
+                            <b>Questions Posted</b>
+                        </h4>
+                    </div>
+                </div>
+                <div className="iq-card-body">
+                <Card className="iq-mb-3">
+                    <Card.Body>
+                        <Card.Text className="mb-0"> 17/02/23, 5:13:00 </Card.Text>
+                        <Card.Title as="h6"> How to improve Gut Health? </Card.Title>
+                        <Link to="#" className="btn btn-primary">View Answer</Link>
+                    </Card.Body>
+                </Card>
+                </div>
+            </div>
+            <div className="iq-card" style={{backgroundColor: '#ceebee'}}>
+                <div className="iq-card-header d-flex justify-content-between">
+                    <div className="iq-header-title">
+                        <h4 className="card-title">
+                            <b>Appointment Schedule</b>
+                        </h4>
+                    </div>
+                </div>
+                <div className="iq-card-body">
+                <Card className="iq-mb-3">
+                    <Card.Body>
+                        <Card.Title as="h6"> Dr. Jennifer Kates </Card.Title>
+                        <Card.Text className="mb-0"> 17/02/23, 5:13:00 </Card.Text>   
+                    </Card.Body>
+                </Card>
+                </div>
+            </div>
             </Col>
 
-            <Col lg="6">   {/* Part 2 : Design of Right Side Part */}
+            <Col lg="8">   {/* Part 2 : Design of Right Side Part */}
                 <div className="iq-card" style={{backgroundColor: '#ceebee'}}>
                     <div className="iq-card-header d-flex justify-content-between">
                         <div className="iq-header-title">
@@ -128,9 +140,46 @@ const AdminProfile = () => {
                     </div>    
                     
                 </div>
+
+                <div className="iq-card" style={{backgroundColor: '#ceebee'}}>
+                <div className="iq-card-header d-flex justify-content-between">
+                    <div className="iq-header-title">
+                        <h4 className="card-title">
+                            <b>Appointment History</b>
+                        </h4>
+                    </div>
+                </div>
+                <div className="iq-card-body">
+                <Table className="mb-0" borderless>
+                    <thead className="table-light">
+                        <tr className="text-center">
+                            <th scope="col">ID</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Doctor Name</th>
+                            <th scope="col">Specialization</th>
+                        </tr>
+                    </thead>
+                    <tbody className="table-striped">
+                        <tr className="text-center table-primary">
+                            <td>1</td>
+                            <td>21/09/2023</td>
+                            <td>Dr. Sushma</td>
+                            <td>Dentist</td>
+                        </tr>
+                        <tr className="text-center table-primary">
+                            <td>2</td>
+                            <td>21/09/2023</td>
+                            <td>Dr. Sushma</td>
+                            <td>Dentist</td>
+                        </tr>
+                    </tbody>
+                    </Table>
+                </div>
+            </div>
             </Col>
         </Row>
-    </Fragment>
+
+        </Fragment>
     );
 };
-export default AdminProfile;
+export default PatientProfile;

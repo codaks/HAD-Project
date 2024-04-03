@@ -13,7 +13,7 @@ import { Button, ButtonGroup, Dropdown} from "react-bootstrap";
 //Axios
 import axios from 'axios';
 
-const AdminProfile = () => {
+const ModeratorProfile = () => {
     /*const [tableData, setTableData] = useState({
         fname: "",
         lname: "",
@@ -70,7 +70,7 @@ const AdminProfile = () => {
                         />
                     </div>
                     <div className="text-center mt-3">
-                        <div> <h4> <b>ADMIN</b> </h4> </div>
+                        <div> <h4> <b>MODERATOR</b> </h4> </div>
                         <div style={{ marginTop: '20px' }}>
                         <Link to="/update-profile" className="btn btn-primary me-1 mb-3">
                             <i className="ri-bill-fill"></i>Update Profile
@@ -133,4 +133,4 @@ const AdminProfile = () => {
     </Fragment>
     );
 };
-export default AdminProfile;
+export default ModeratorProfile;

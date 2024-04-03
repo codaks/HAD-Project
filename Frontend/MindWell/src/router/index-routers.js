@@ -5,6 +5,10 @@ import DefaultLayout from "../layouts/default-layout"
 import Index from '../views/index'
 import AdminDashboard from "../views/AdminDashboard";
 import AdminProfile from "../views/AdminProfile";
+import SeniorDoctorProfile from "../views/SeniorDoctorProfile";
+import ExpertProfile from "../views/ExpertProfile";
+import ModeratorProfile from "../views/ModeratorProfile";
+import PatientProfile from "../views/PatientProfile";
 import DashboardOne from '../views/dashboard-1';
 import DashboardTwo from "../views/dashboard-2";
 import DashboardThree from "../views/dashboard-3";
@@ -100,6 +104,22 @@ export const IndexRouters = [
             {
                 path:'AdminProfile',
                 element:<AdminProfile/>
+            },
+            {
+                path:'SeniorDoctorProfile',
+                element:<SeniorDoctorProfile/>
+            },
+            {
+                path:'ExpertProfile',
+                element:<ExpertProfile/>
+            },
+            {
+                path:'ModeratorProfile',
+                element:<ModeratorProfile/>
+            },
+            {
+                path:'PatientProfile',
+                element:<PatientProfile/>
             },
             {
                 path:'dashboard-1',

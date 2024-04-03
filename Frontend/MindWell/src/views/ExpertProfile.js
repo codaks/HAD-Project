@@ -13,7 +13,7 @@ import { Button, ButtonGroup, Dropdown} from "react-bootstrap";
 //Axios
 import axios from 'axios';
 
-const AdminProfile = () => {
+const ExpertProfile = () => {
     /*const [tableData, setTableData] = useState({
         fname: "",
         lname: "",
@@ -28,6 +28,9 @@ const AdminProfile = () => {
         state: "",
         pincode: "",
         mobile_number: "",
+        specialization: "",
+        working_under: "",
+        experiance: ""
     });
 
     useEffect(() => {
@@ -70,7 +73,23 @@ const AdminProfile = () => {
                         />
                     </div>
                     <div className="text-center mt-3">
-                        <div> <h4> <b>ADMIN</b> </h4> </div>
+                        <div> <h4> <b>EXPERT</b> </h4> </div>
+                        <div>
+                            <Table style={{marginTop: '20px' }}>
+                            <tr style={{color: '#000000'}}>
+                                <td style={{textAlign: 'left'}}> Specialization </td>
+                                <td style={{textAlign: 'left'}}>Skin Specialist</td>
+                            </tr>
+                            <tr style={{color: '#000000'}}>
+                                <td style={{textAlign: 'left'}}> Working Under </td>
+                                <td style={{textAlign: 'left'}}>Kate James</td>
+                            </tr>
+                            <tr style={{color: '#000000'}}>
+                                <td style={{textAlign: 'left'}}> Experiance </td>
+                                <td style={{textAlign: 'left'}}>5 Years</td>
+                            </tr>
+                            </Table>
+                        </div>
                         <div style={{ marginTop: '20px' }}>
                         <Link to="/update-profile" className="btn btn-primary me-1 mb-3">
                             <i className="ri-bill-fill"></i>Update Profile
@@ -133,4 +152,4 @@ const AdminProfile = () => {
     </Fragment>
     );
 };
-export default AdminProfile;
+export default ExpertProfile;
