@@ -3,44 +3,43 @@ package com.hadproject.healthcareapp.appointment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hadproject.healthcareapp.expert.Expert;
 import com.hadproject.healthcareapp.patient.Patient;
-import com.hadproject.healthcareapp.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "appointment")
 public class Appointment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "A_id")
-    int id;
+    @Column(name = "a_id")
+    private Integer id;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "uid")
-    private Set<Expert> e_id;
+    @JoinColumn(name = "expert_id")
+    private Set<Expert> experts;
 
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "uid")
-    private Set<Patient> p_id;
+    @JoinColumn(name = "patient_id")
+    private Set<Patient> patients;
 
-    @JsonIgnore
     @Column(nullable = false)
-    private String date;
+    private LocalDate date;
 
-    @JsonIgnore
     @Column(nullable = false)
-    private String time;
+    private LocalTime time;
 
+    private int patientId;
 
+    private int expertId;
 }
