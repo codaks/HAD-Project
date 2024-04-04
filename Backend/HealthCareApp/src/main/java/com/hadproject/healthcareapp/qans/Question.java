@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Question")
 public class Question {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "q_id")
@@ -40,6 +39,11 @@ public class Question {
 
     @JsonIgnore
     @Column(nullable = false)
-    private String flag;
+    private Integer flag;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private boolean status;
+
 
 }

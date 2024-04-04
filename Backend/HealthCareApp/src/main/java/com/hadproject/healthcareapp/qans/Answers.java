@@ -24,7 +24,7 @@ public class Answers {
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "q_id")
-    private Question q_id;
+    private Question questionid;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -33,7 +33,7 @@ public class Answers {
 
 
     @JsonIgnore
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String answers_text;
 
     @JsonIgnore
@@ -47,5 +47,9 @@ public class Answers {
     @JsonIgnore
     @Column(nullable = false)
     private int upvotes;
+
+    @JsonIgnore
+    @Column(nullable = false)
+    private boolean status;
 }
 

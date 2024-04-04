@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnsRequest {
-    private int q_id;
-    private int uid;
-    private String answers_text;
+public class QuestionResponse {
+
+    String question_text;
+    String posted_by;
+    String date_time;
 }
