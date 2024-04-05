@@ -1,4 +1,4 @@
-package com.hadproject.healthcareapp.qans;
+package com.hadproject.healthcareapp.selfassessment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hadproject.healthcareapp.user.User;
@@ -13,43 +13,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Answers")
-public class Answers {
-
+@Table(name = "QuizResults")
+public class QuizResults {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "a_id")
     private int id;
-
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "q_id")
-    private Question questionid;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "uid")
     private User u_id;
 
+    @Column(nullable = false)
+    private String Remark;
 
     @JsonIgnore
     @Column(nullable = false)
-    private String answers_text;
+    private int points;
 
     @JsonIgnore
     @Column(nullable = false)
     private String date;
 
-    @JsonIgnore
-    @Column(nullable = false)
-    private int flag;
+
 
     @JsonIgnore
     @Column(nullable = false)
-    private int upvotes;
-
-    @JsonIgnore
-    @Column(nullable = false)
-    private boolean status;
+    private String selectedOptions;
 }
-
