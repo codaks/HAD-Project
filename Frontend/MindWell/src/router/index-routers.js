@@ -359,7 +359,7 @@ export const IndexRouters = [
                 element:<HighLevel/>
             },
             {
-                path:'answers',
+                path:'answers/:qid',
                 element:<Lowlevel/>
             },
             {
