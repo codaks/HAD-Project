@@ -19,7 +19,7 @@ public class Answers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "a_id")
-    int id;
+    private Integer id;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
