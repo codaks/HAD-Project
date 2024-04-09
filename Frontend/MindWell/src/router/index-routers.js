@@ -5,6 +5,7 @@ import DefaultLayout from "../layouts/default-layout"
 import Index from '../views/index'
 import AdminDashboard from "../views/AdminDashboard";
 import AdminProfile from "../views/AdminProfile";
+import ExpertDashboard from "../views/ExpertDashboard";
 import DashboardOne from '../views/dashboard-1';
 import DashboardTwo from "../views/dashboard-2";
 import DashboardThree from "../views/dashboard-3";
@@ -85,6 +86,9 @@ import PrivacySetting from "../views/modules/extra-pages/privacy-setting";
 
 
 import { Navigate } from "react-router-dom";
+import ModeratorDashboard from "../views/ModeratorDashboard";
+import DoctorDashboard from "../views/DoctorDashboard";
+import PatientDashboard from "../views/PatienetDashboard";
 export const IndexRouters = [
     {
         path: '',
@@ -101,6 +105,22 @@ export const IndexRouters = [
             {
                 path:'AdminDashboard',
                 element:<AdminDashboard/>
+            },
+            {
+                path:'ExpertDashboard',
+                element:<ExpertDashboard/>
+            },
+            {
+                path:'ModeratorDashboard',
+                element:<ModeratorDashboard/>
+            },
+            {
+                path:'DoctorDashboard',
+                element:<DoctorDashboard/>
+            },
+            {
+                path:'PatientDashboard',
+                element:<PatientDashboard/>
             },
             {
                 path:'AdminProfile',

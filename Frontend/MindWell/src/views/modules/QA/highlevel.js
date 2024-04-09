@@ -32,14 +32,14 @@ const HighLevel = () => {
       }
     }
 
-    const fetchQuestions = async () => {
+    const fetchQuestions = () => {
       const accessToken = localStorage.getItem('access_token');
 
       try {
 
         const headers = {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${accessToken}`,
         };
 
@@ -71,17 +71,6 @@ const HighLevel = () => {
     console.log("Search Query:", searchQuery);
   };
 
-  const handleSearchChange2 = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  // Function to handle search form submission
-  const handleSearchSubmit2 = (event) => {
-    event.preventDefault();
-    // Perform search logic here
-    console.log("Search Query:", searchQuery);
-  };
-
   const handleSearchSubmit3 = (event) => {
     event.preventDefault();
     // Perform search logic here
@@ -107,7 +96,7 @@ const HighLevel = () => {
 
       const headers = {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${accessToken}`,
       };
 

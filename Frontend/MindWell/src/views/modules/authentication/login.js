@@ -59,9 +59,23 @@ const LoginPage = () => {
                     // Store token in local storage (not secure, consider better methods)
                     
                     localStorage.setItem('id', token.id);
+                    localStorage.setItem('username', loginDetails.email);
                     localStorage.setItem('access_token', token.access_token);
+                    localStorage.setItem('role',response.data.role);
+
                     console.log("login Sucessful");
-                    navigate('/home/home');
+                    console.log(response.data.role)
+                    if(response.data.role=="ADMIN")
+                        navigate('/home/AdminDashboard');
+                    if(response.data.role=="EXPERT")
+                        navigate('/home/ExpertDashboard');
+                    if(response.data.role=="SENIOR_DOCTOR")
+                        navigate('/home/DoctorDashboard');
+                    if(response.data.role=="MODERATOR")
+                        navigate('/home/ModeratorDashboard')
+                    else if(response.data.role=="PATIENT")
+                        navigate('/home/PatientDashboard');
+                    
                 })
                 .catch((error) => {
                     setAlert("Username or Password is Incorrect")

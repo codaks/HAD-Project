@@ -59,6 +59,7 @@ public class  QansController {
 
     @GetMapping("/flaggedallquestions")
     public ResponseEntity<List<AllQuestionsResponse>> getAllFlaggedQuestions() {
+        System.out.println("***********");
         List<AllQuestionsResponse> flaggedQuestions = service.getAllFlaggedQuestions();
         return ResponseEntity.ok(flaggedQuestions);
     }
@@ -94,8 +95,5 @@ public class  QansController {
         String result = service.deleteFlaggedAnswer(answerId);
         return ResponseEntity.ok(result);
     }
-
-
-
 
 }

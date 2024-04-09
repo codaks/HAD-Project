@@ -22,6 +22,7 @@ import user2 from "../../../assets/images/user/02.jpg";
 import user3 from "../../../assets/images/user/03.jpg";
 import user4 from "../../../assets/images/user/04.jpg";
 import user5 from "../../../assets/images/user/05.jpg";
+import user6 from "../../../assets/images/user/19.png";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as SettingSelector from "../../../store/setting/selectors";
@@ -30,6 +31,7 @@ import * as SettingAction from "../../../store/setting/actions";
 const Header = memo(() => {
   // Fixed Header
   const [isFixed, setIsFixed] = useState(false);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,11 +41,15 @@ const Header = memo(() => {
         setIsFixed(false);
       }
     };
-
+    const handleUSername = ()=>{
+      setUserName(localStorage.getItem('username'));
+    }
     window.addEventListener("scroll", handleScroll);
+    handleUSername();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      
     };
   }, []);
 
@@ -77,7 +83,7 @@ const Header = memo(() => {
             </div>
           </div>
           <Navbar expand="lg" variant="light" className="p-0">
-            <div className="iq-search-bar">
+            {/* <div className="iq-search-bar">
               <form action="#" className="searchbox">
                 <input
                   type="text"
@@ -88,7 +94,7 @@ const Header = memo(() => {
                   <i className="ri-search-line"></i>
                 </Link>
               </form>
-            </div>
+            </div> */}
             <button
               className="navbar-toggler"
               type="button"
@@ -174,9 +180,9 @@ const Header = memo(() => {
                 </Dropdown>
 
                 {/* RTL & LTR Mode start */}
-                <li className="nav-item">
+                {/* <li className="nav-item"> */}
                  {/* eslint-disable-next-line */}
-                  <a className="rtl-switch-toogle">
+                  {/* <a className="rtl-switch-toogle">
                     <span className="form-check form-switch">
                       <Form.Check.Input
                         className="form-check-input rtl-switch"
@@ -194,14 +200,14 @@ const Header = memo(() => {
                         Rtl
                       </span>
                     </span>
-                  </a>
-                </li>
+                  </a> */}
+                {/* </li> */}
                 {/* RTL & LTR Mode end */}
 
                 {/* <li className="nav-item iq-full-screen"> */}
-                <div to="#" className="iq-waves-effect" id="btnFullscreen">
+                {/* <div to="#" className="iq-waves-effect" id="btnFullscreen">
                   <Fullscreen />
-                </div>
+                </div> */}
                 {/* </li> */}
                 <Dropdown as="li" className="nav-item">
                   <Dropdown.Toggle
@@ -419,13 +425,13 @@ const Header = memo(() => {
                   variant="search-toggle iq-waves-effect d-flex align-items-center"
                 >
                   <img
-                    src={user1}
+                    src={user6}
                     className="img-fluid rounded mr-3"
                     alt="user"
                   />
                   <div className="caption">
-                    <h6 className="mb-0 line-height">Bini Jets</h6>
-                    <span className="font-size-12">Available</span>
+                    <h6 className="mb-0 line-height">{userName}</h6>
+                    <span className="font-size-12">Logout</span>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="iq-sub-dropdown iq-user-dropdown">
@@ -433,7 +439,7 @@ const Header = memo(() => {
                     <div className="iq-card-body p-0 ">
                       <div className="bg-primary p-3">
                         <h5 className="mb-0 text-white line-height">
-                          Hello Bini Jets
+                          {userName}
                         </h5>
                         <span className="text-white font-size-12">
                           Available

@@ -42,139 +42,118 @@ const AdminDashboard = () => {
 
 
     const handleOptionSelect = (option) => {
+        setSelectedOption(dropdownOptions[option]);
+    };
+
+
+    useEffect(() => {
         const accessToken = localStorage.getItem('access_token');
         const headers = {
-            "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
+            // "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
         };
-        
-        try {
-            setSelectedOption(dropdownOptions[option]);
-            console.log("Selected Option: ", selectedOption.name)
-            const url = '/admin/getlistbyrole/' + selectedOption.name;
-            axiosInstance.get(url, { headers: headers }).then((response) => {
-                console.log("I had Changed the URL");
-                setRoleList(response.data);
-            });
-        } catch (exception) {
-            console.log(exception)
-        }
-    };
+        const url = '/admin/getlistbyrole/' + selectedOption.name;
+        console.log("Selected Option: ", selectedOption.name)
+        axiosInstance.get(url, { headers: headers }).then((response) => {
+            console.log("I had Changed the URL");
+            setRoleList(response.data);
+        });
+    }, [selectedOption]);
 
-    
+
 
     const navigate = useNavigate();
-    useEffect(() => {
-        const fetchDashboardData = async () => {
-            const accessToken = localStorage.getItem('access_token');
-
-            console.log(accessToken)
-            if (accessToken === null) {
-                navigate('/sign-in');
-            }
-            try {
-
-                const headers = {
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*",
-                    Authorization: `Bearer ${accessToken}`,
-                };
-                const url = '/admin/getlistbyrole/' + selectedOption.name;
-                axiosInstance.get('/admin/getcount/ADMIN', { headers: headers }).then((response) => {
-                    console.log("Admins: ", response.data);
-                    setToalAdmin(response.data);
-                });
-                axiosInstance.get('/admin/getcount/PATIENT', { headers: headers }).then((response) => {
-                    setTotalPatients(response.data);
-                });
-                // axiosInstance.get('/admin/getcount/EXPERT', { headers: headers }).then((response) => {
-                //     setTotalExperts(response.data);
-                // });
-                // axiosInstance.get('/admin/getcount/MODERATOR', { headers: headers }).then((response) => {
-                //     setTotalModerators(response.data);
-                // // });
-                // axiosInstance.get('/admin/getcount/SENIOR_DOCTOR', { headers: headers }).then((response) => {
-                //     setTotalDoctors(response.data);
-                // });
-
-                axiosInstance.get(url, { headers: headers }).then((response) => {
-                    console.log("The data is: ", response.data);
-                    setRoleList(response.data);
-                });
-
-            }
-            catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchDashboardData();
-
-    }, [selectedOption]);
-    {/*const [graphData, setGraphData] = useState({
-        labels: [],  // Initialize with empty labels
-        datasets: [{
-            label: 'Number of Appointments',
-            data: [],
-            backgroundColor: [],  
-            series: [],
-        }],
-    });
-    useEffect(() => {
-        fetchData();
-    }, []); // Runs once when component mounts
-    const fetchData = async () => {
+    useEffect(()=>{
+        const accessToken = localStorage.getItem('access_token');
         try {
-            //'/api/appointments' to fetch data
-            const response = await axios.get('/api/appointments');
-            const dataFromAPI = response.data;
 
-            setGraphData({
-                options: graphData.options,
-                series: dataFromAPI.series,
-                name: series.name,
-                data: series.data,
+            const headers = {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                Authorization: `Bearer ${accessToken}`,
+            };
+            axiosInstance.get('/admin/getcount/ADMIN', { headers: headers }).then((response) => {
+                console.log("Admins: ", response.data);
+                setToalAdmin(response.data);
             });
-        } catch (error) {
-            console.error('Error fetching data:', error);
+
+        }catch(error){
+            console.log(error);
         }
-    };
-*/}
-    {/* 
-    const [appointments, setAppointments] = useState([]);
-    useEffect(() => {
-        fetchData();
-    }, []);
+    },[totalAdmin])
+    // useEffect(()=>{
+    //     const accessToken = localStorage.getItem('access_token');
+    //     try {
 
-    const fetchData = async () => {
-        try {
-            const response = await axios.get('/api/appointments');
-            setAppointments(response.data);
-        } catch (error) {
-            console.error('Error fetching appointments:', error);
-        }
-    };
-    */}
-    {/* 
-    const [doctors, setDoctors] = useState([]);
+    //         const headers = {
+    //             "Content-Type": "application/json",
+    //             "Access-Control-Allow-Origin": "*",
+    //             Authorization: `Bearer ${accessToken}`,
+    //         };
+    //         axiosInstance.get('/admin/getcount/MODERATOR', { headers: headers }).then((response) => {
+    //             console.log("Admins: ", response.data);
+    //             setToalAdmin(response.data);
+    //         });
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    //     }catch(error){
+    //         console.log(error);
+    //     }
+    // },[totalModerators])
+    // useEffect(()=>{
+    //     const accessToken = localStorage.getItem('access_token');
+    //     try {
 
-    const fetchData = async () => {
-        try {
-            const response = await axios.get('/api/doctors');
-            setDoctors(response.data);
-        } catch (error) {
-            console.error('Error fetching doctors:', error);
-        }
-    };
+    //         const headers = {
+    //             "Content-Type": "application/json",
+    //             "Access-Control-Allow-Origin": "*",
+    //             Authorization: `Bearer ${accessToken}`,
+    //         };
+    //         axiosInstance.get('/admin/getcount/SENIOR_DOCTOR', { headers: headers }).then((response) => {
+    //             console.log("Admins: ", response.data);
+    //             setTotalDoctors(response.data);
+    //         });
 
-    const removeDoctor = (doctorId) => {
-        // Implement your remove doctor logic here
-    };
-    */}
+    //     }catch(error){
+    //         console.log(error);
+    //     }
+    // },[totalDoctors])
+    // useEffect(()=>{
+    //     const accessToken = localStorage.getItem('access_token');
+    //     try {
+
+    //         const headers = {
+    //             "Content-Type": "application/json",
+    //             "Access-Control-Allow-Origin": "*",
+    //             Authorization: `Bearer ${accessToken}`,
+    //         };
+    //         axiosInstance.get('/admin/getcount/EXPERT', { headers: headers }).then((response) => {
+    //             console.log("Admins: ", response.data);
+    //             setTotalExperts(response.data);
+    //         });
+
+    //     }catch(error){
+    //         console.log(error);
+    //     }
+    // },[totalExperts])
+    // useEffect(()=>{
+    //     const accessToken = localStorage.getItem('access_token');
+    //     try {
+
+    //         const headers = {
+    //             "Content-Type": "application/json",
+    //             "Access-Control-Allow-Origin": "*",
+    //             Authorization: `Bearer ${accessToken}`,
+    //         };
+    //         axiosInstance.get('/admin/getcount/PATIENT', { headers: headers }).then((response) => {
+    //             setTotalPatients(response.data);
+    //         });
+
+    //     }catch(error){
+    //         console.log(error);
+    //     }
+    // },[totalPatients])
+
     const Appointments = {  //Dummy Data
         options: {
             chart: {

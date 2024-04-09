@@ -1,7 +1,7 @@
 import React, { Fragment, memo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/custome-logo.png";
 import VerticalNav from "./verticalNav";
 
 // Redux Selector / Action
@@ -22,20 +22,9 @@ const Sidebar = memo(() => {
         <div className="iq-sidebar-logo d-flex justify-content-between">
           <Link to="/">
             <img src={logo} className="img-fluid" alt="" />
-            <span>{appName}</span>
+            <span>MindWell</span>
+            {/* {appName} */}
           </Link>
-          <div className="iq-menu-bt-sidebar">
-            <div className="iq-menu-bt align-self-center">
-              <div className="wrapper-menu">
-                <div className="main-circle">
-                  <i className="ri-more-fill"></i>
-                </div>
-                <div className="hover-circle">
-                  <i className="ri-more-2-fill" onClick={minisidebar}></i>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div id="sidebar-scrollbar">
             <VerticalNav />

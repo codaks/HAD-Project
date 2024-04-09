@@ -23,5 +23,7 @@ public class AuthenticationResponse {
   @JsonProperty("role")
   private String role;
 
+  @JsonProperty("gender")
+  private String gender;
 
 }

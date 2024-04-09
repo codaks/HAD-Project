@@ -53,11 +53,32 @@ const VerticalNav = memo(() => {
             <i className="ri-subtract-line"></i>
             <span>Dashboard</span>
           </li>
-          <SidebarMenu isTag="true" pathname="/home/home" title="Doctor Dashboard">
+
+          <SidebarMenu isTag="true" pathname="/home/AdminDashboard" title="Admin Dashboard">
             <i className="ri-hospital-fill"></i>
           </SidebarMenu>
 
-          <SidebarMenu
+          <SidebarMenu isTag="true" pathname="/home/ExpertDashboard" title="Expert Dashboard">
+            <i className="ri-hospital-fill"></i>
+          </SidebarMenu>
+
+          <SidebarMenu isTag="true" pathname="/home/ModeratorDashboard" title="Moderator Dashboard">
+            <i className="ri-hospital-fill"></i>
+          </SidebarMenu>
+
+          <SidebarMenu isTag="true" pathname="/home/DoctorDashboard" title="Doctor Dashboard">
+            <i className="ri-hospital-fill"></i>
+          </SidebarMenu>
+
+          <SidebarMenu isTag="true" pathname="/home/PatientDashboard" title="Patient Dashboard">
+            <i className="ri-hospital-fill"></i>
+          </SidebarMenu>
+
+          {/* <SidebarMenu isTag="true" pathname="/home/home" title="Doctor Dashboard">
+            <i className="ri-hospital-fill"></i>
+          </SidebarMenu> */}
+
+          {/* <SidebarMenu
             isTag="true"
             pathname="/home/dashboard-1"
             title="Hospital Dashboard 1 "
@@ -85,13 +106,13 @@ const VerticalNav = memo(() => {
             isNew="true"
           >
             <i className="lab la-mendeley"></i>
-          </SidebarMenu>
-          <li className="iq-menu-title">
+          </SidebarMenu> */}
+          {/* <li className="iq-menu-title">
             <i className="ri-subtract-line"></i>
-            <span>Apps</span>
-          </li>
+            <span>Email</span>
+          </li> */}
           {/* Email menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="email-menu"
             bsPrefix={`${active === "email" ? "active menu-open" : ""} `}
@@ -128,11 +149,11 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
+          </Accordion.Item> */}
           {/* Email menu End */}
 
           {/* Doctors menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="doctor-menu"
             bsPrefix={`nav-item ${active === "doctor" ? "active" : ""} `}
@@ -163,7 +184,7 @@ const VerticalNav = memo(() => {
                 <SidebarMenu
                   isTag="false"
                   staticIcon="true"
-                  iconClass="ri-user-add-fill"s
+                  iconClass="ri-user-add-fill" s
                   pathname="/home/add-doctors"
                   title="Add Doctors"
                 ></SidebarMenu>
@@ -183,10 +204,15 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
+          </Accordion.Item> */}
           {/* Doctors menu End */}
           {/* Calendar */}
-          <SidebarMenu isTag="true" pathname="/home/calendar" title="Calendar">
+          <li className="iq-menu-title">
+            <i className="ri-subtract-line"></i>
+            <span>Appointments</span>
+          </li>
+
+          <SidebarMenu isTag="true" pathname="/home/calendar" title="Scheduled Appointments">
             <i className="ri-calendar-event-fill"></i>
           </SidebarMenu>
           {/* Chat */}
@@ -195,10 +221,21 @@ const VerticalNav = memo(() => {
           </SidebarMenu>
           <li className="iq-menu-title">
             <i className="ri-subtract-line"></i>
-            <span>Components</span>
+            <span>Question Answer Forum</span>
           </li>
+          <SidebarMenu isTag="true" pathname="/home/questions" title="Ask Question">
+            <i className="fa fa-question-circle"></i>
+          </SidebarMenu>
+
+          <li className="iq-menu-title">
+            <i className="ri-subtract-line"></i>
+            <span>Self Help Assessment</span>
+          </li>
+          <SidebarMenu isTag="true" pathname="/home/slef-help-app" title="Assessment">
+            <i className="fa fa-list-alt"></i>
+          </SidebarMenu>
           {/* UI-Elements menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="uiElement-menu"
             bsPrefix={`nav-item ${active === "uiElement" ? "active" : ""} `}
@@ -206,7 +243,7 @@ const VerticalNav = memo(() => {
           >
             <CustomToggle
               eventKey="uiElement-menu"
-              active={activeMenu === 'uiElement' ? true : false} 
+              active={activeMenu === 'uiElement' ? true : false}
               onClick={(activeKey) => setActiveMenu(activeKey)}
             >
               <OverlayTrigger
@@ -218,9 +255,9 @@ const VerticalNav = memo(() => {
               <span className="item-name">UI Elements</span>
               <i className="ri-arrow-right-s-line iq-arrow-right"></i>
             </CustomToggle>
-            <Accordion.Collapse eventKey="uiElement-menu">
-              <ul className="iq-submenu collapse menu-open">
-                <SidebarMenu
+            <Accordion.Collapse eventKey="uiElement-menu"> */}
+              {/* <ul className="iq-submenu collapse menu-open"> */}
+                {/* <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-font-color"
@@ -264,7 +301,7 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
                 <SidebarMenu
                   isTag="false"
-                  staticIcon="true"
+                  staticIcon="true" 
                   iconClass="ri-bank-card-fill"
                   pathname="/home/ui-cards"
                   title="Cards"
@@ -303,7 +340,7 @@ const VerticalNav = memo(() => {
                   iconClass="ri-file-list-fill"
                   pathname="/home/ui-list-group"
                   title="List Group"
-                ></SidebarMenu>
+                ></SidebarMenu> */}
                 {/* <SidebarMenu
                   isTag="false"
                   staticIcon="true"
@@ -311,7 +348,7 @@ const VerticalNav = memo(() => {
                   pathname="/home/ui-media"
                   title="Media"
                 ></SidebarMenu> */}
-                <SidebarMenu
+                {/* <SidebarMenu
                   isTag="false"
                   staticIcon="true"
                   iconClass="ri-checkbox-blank-fill"
@@ -359,15 +396,15 @@ const VerticalNav = memo(() => {
                   iconClass="ri-record-mail-fill"
                   pathname="/home/ui-tooltips"
                   title="Tooltips"
-                ></SidebarMenu>
-              </ul>
-            </Accordion.Collapse>
-          </Accordion.Item>
+                ></SidebarMenu> */}
+              {/* </ul> */}
+            {/* </Accordion.Collapse> */}
+          {/* </Accordion.Item> */}
           {/* UI-Elements menu End */}
           {/* UI-Elements menu End */}
 
           {/* Forms menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="forms-menu"
             bsPrefix={`nav-item ${active === "forms" ? "active" : ""} `}
@@ -425,11 +462,11 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
+          </Accordion.Item> */}
           {/* Forms menu End */}
 
           {/* Forms menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="form-wizard-menu"
             bsPrefix={`nav-item ${active === "form-wizard" ? "active" : ""} `}
@@ -473,11 +510,11 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
+          </Accordion.Item> */}
           {/* Form-Wizard menu End */}
 
           {/* Table menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="table-menu"
             bsPrefix={`nav-item ${active === "tables" ? "active" : ""} `}
@@ -521,11 +558,11 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
+          </Accordion.Item> */}
           {/* Table menu End */}
 
           {/* Chart menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="charts-menu"
             bsPrefix={`nav-item ${active === "charts" ? "active" : ""} `}
@@ -569,11 +606,11 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
+          </Accordion.Item> */}
           {/* Chart menu End */}
 
           {/* Icons menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="icons-menu"
             bsPrefix={`nav-item ${active === "icons" ? "active" : ""} `}
@@ -631,8 +668,9 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
-          {/* Chart menu End */}
+          </Accordion.Item> */}
+
+
 
           <li className="iq-menu-title">
             <i className="ri-subtract-line"></i>
@@ -640,12 +678,11 @@ const VerticalNav = memo(() => {
           </li>
 
           {/* Authentication menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="authentication-menu"
-            bsPrefix={`nav-item ${
-              active === "authentication" ? "active" : ""
-            } `}
+            bsPrefix={`nav-item ${active === "authentication" ? "active" : ""
+              } `}
             onClick={() => setActive("authentication")}
           >
             <CustomToggle
@@ -700,11 +737,11 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
+          </Accordion.Item> */}
           {/* Authentication menu End */}
 
           {/* Maps menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="maps-menu"
             bsPrefix={`nav-item ${active === "maps" ? "active" : ""} `}
@@ -741,11 +778,11 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
+          </Accordion.Item> */}
           {/* Maps menu End */}
 
           {/* Extra pages menu Start */}
-          <Accordion.Item
+          {/* <Accordion.Item
             as="li"
             eventKey="extra-pages-menu"
             bsPrefix={`nav-item ${active === "extra-pages" ? "active" : ""} `}
@@ -838,7 +875,7 @@ const VerticalNav = memo(() => {
                 ></SidebarMenu>
               </ul>
             </Accordion.Collapse>
-          </Accordion.Item>
+          </Accordion.Item> */}
           {/* Extra pages menu End */}
 
           {/* Menu Level start */}

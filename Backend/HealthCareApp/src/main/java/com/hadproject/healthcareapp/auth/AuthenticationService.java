@@ -74,6 +74,7 @@ public class AuthenticationService {
             .refreshToken(refreshToken)
             .id(user_id.getId())
             .role(request.getRole().toString())
+            .gender(userDetail.getGender())
         .build();
   }
 

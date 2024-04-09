@@ -5,7 +5,6 @@ import { faStar, faFlag } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { useParams, useNavigate } from 'react-router-dom';
-import { use } from "echarts";
 import axiosInstance from '../../../axiosInstance';
 
 const LowLevel = () => {
@@ -20,8 +19,8 @@ const LowLevel = () => {
   });
 
   const [postAnswer, setPostAnswer] = useState(
-    { 
-      q_id:"",
+    {
+      q_id: "",
       uid: "",
       answers_text: ""
     }
@@ -35,6 +34,12 @@ const LowLevel = () => {
     flag: 0,
     upvote: 0
   }]);
+
+  const[ flag,setFlag] = useState({
+    id:""
+  });
+
+
   useEffect(() => {
 
     const checkEligiblity = async () => {
@@ -53,7 +58,7 @@ const LowLevel = () => {
 
         const headers = {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${accessToken}`,
         };
 
@@ -75,7 +80,7 @@ const LowLevel = () => {
 
         const headers = {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${accessToken}`,
         };
 
@@ -101,6 +106,7 @@ const LowLevel = () => {
     updatedAnswers[index].likes += 1;
     setAnswers(updatedAnswers);
   };
+  
 
   const handleOnChangeAddAnswer = (event) => {
     event.preventDefault();
@@ -118,7 +124,7 @@ const LowLevel = () => {
     try {
       const headers = {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${accessToken}`,
       };
 
@@ -140,7 +146,51 @@ const LowLevel = () => {
     name: "John Doe",
     profilePic: "https://via.placeholder.com/150", // Replace with actual profile picture URL
   };
+  
+  const addToFlagResponses = (event) => {
+    event.preventDefault();
 
+    const accessToken = localStorage.getItem('access_token');
+    setFlag({id:event.target.id});
+    console.log("Flagged Response: ", event.target.id);
+      try{
+        const headers = {
+          "Content-Type": "application/json",
+          // "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${accessToken}`,
+        };
+        console.log("Flag: ",flag)
+        axiosInstance.post(`/qaresponse/flagresponse/`, flag,{ headers: headers }).then((response) => {
+          console.log("Admins: ", response.data);
+        });
+      }
+      catch (error) {
+        console.error('Error fetching data:', error);
+      }
+  }
+
+  const addToUpvotes = (event)=>{
+    event.preventDefault();
+    
+    const accessToken = localStorage.getItem('access_token');
+    console.log("Upvoted Response: ", event.target.id);
+    try{
+      const headers = {
+        "Content-Type": "application/json",
+        // "Access-Control-Allow-Origin": "*",
+        Authorization: `Bearer ${accessToken}`,
+      };
+      const upvoteData = {
+        id: event.target.id
+      }
+      axiosInstance.post(`/qaresponse/upvote/`, upvoteData,{ headers: headers }).then((response) => {
+        console.log("Admins: ", response.data);
+      });
+    }
+    catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   return (
     <Fragment>
@@ -176,19 +226,19 @@ const LowLevel = () => {
       </div>
       <br></br>
       <Row className="justify-content-end mb-3">
-          <Form className="d-flex" onSubmit={handleAddQuestionSubmit}>
-            <FormControl
-              type="search"
-              placeholder="Do You Know About it? Then Post Your Suggestions Here!"
-              className="me-3 "
-              aria-label="Post Answer"
-              onChange = {handleOnChangeAddAnswer}
-            />
-            <Button variant="primary" className="me-5 " type="submit">
-              Post Answer
-            </Button>
-          </Form>
-        </Row>
+        <Form className="d-flex" onSubmit={handleAddQuestionSubmit}>
+          <FormControl
+            type="search"
+            placeholder="Do You Know About it? Then Post Your Suggestions Here!"
+            className="me-3 "
+            aria-label="Post Answer"
+            onChange={handleOnChangeAddAnswer}
+          />
+          <Button variant="primary" className="me-5 " type="submit">
+            Post Answer
+          </Button>
+        </Form>
+      </Row>
 
       {/* Answers Section */}
       <div className="mb-3">
@@ -211,12 +261,12 @@ const LowLevel = () => {
               {/* Like and Dislike Buttons */}
 
               <div className="d-flex justify-content-end px-3 align-items-center">
-                <Button variant="primary" className="me-1 mb-3">
+                <Button variant="danger" className="me-1 mb-3" onClick={addToFlagResponses} id = {answer.answer_id}>
                   <FontAwesomeIcon icon={faFlag} className="me-1" />
                   Flag Answer
                 </Button>
-                <Button variant="primary" className="me-1 mb-3">
-                  <FontAwesomeIcon icon={faThumbsUp} className="me-1" />
+                <Button variant="primary" className="me-1 mb-3"  onClick={addToUpvotes} id = {answer.answer_id}>
+                  <FontAwesomeIcon icon={faThumbsUp} className="me-1"   />
                   Upvote
                 </Button>
 

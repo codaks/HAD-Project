@@ -30,7 +30,7 @@ const DefaultLayout = memo(() => {
               {/* <h1>DefaultLayout.</h1> */}
               <Outlet></Outlet>
             </Container>
-            <Footer/>
+            {/* {<Footer/>} */}
           </div>
         </div>
     </Fragment>
