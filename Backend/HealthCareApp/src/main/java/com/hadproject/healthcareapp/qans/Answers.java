@@ -19,10 +19,8 @@ public class Answers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "a_id")
-<<<<<<< HEAD
     private int id;
-=======
->>>>>>> 9ada691c758315dbf9e8852f29ed6b252dbbad12
+
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)

@@ -1,8 +1,10 @@
 package com.hadproject.healthcareapp.selfassessment;
 
 import com.hadproject.healthcareapp.Header.Header;
+import com.hadproject.healthcareapp.qans.AnswerResponse;
 import com.hadproject.healthcareapp.qans.Answers;
 import com.hadproject.healthcareapp.token.TokenRepository;
+import com.hadproject.healthcareapp.user.User;
 import com.hadproject.healthcareapp.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +92,7 @@ public class QuizService {
        if(token.isPresent()){
            System.out.println("I Found the Token");
            var quizresult = QuizResults.builder()
-                   .u_id(token.get().user)
+                   .uid(token.get().user)
                    .Remark(remark)
                    .points(totalScore)
                    .date(String.valueOf(new Date()))
@@ -106,7 +108,68 @@ public class QuizService {
 
     /**************** evaluation end***********/
 
-//    public  List<AnswersResponse> getAllQuizResponse(int userId){
-//
-//    }
+    public  List<AnswersResponse> getQuizResponse(Integer quizId){
+
+        List<QuizQuestion> quizQuestions = quizRepository.findAll();
+        List<String> questions = new ArrayList<>();
+
+
+        for(QuizQuestion quizQuestion : quizQuestions){
+            questions.add(quizQuestion.getQuestion());
+        }
+
+        System.out.println(questions);
+
+        Optional<QuizResults> quizResultsOptional = quizResultRepository.findById(quizId);
+        String selectedOptions = "";
+        if (quizResultsOptional.isPresent()) {
+            QuizResults quizResults = quizResultsOptional.get();
+            selectedOptions = quizResults.getSelectedOptions();
+
+        }
+
+        System.out.println(selectedOptions);
+        List<String> selectedOptionsList = Arrays.asList(selectedOptions.split(","));
+
+        List<String> options = Arrays.asList("Not at all", "Several days", "More than half the days", "Nearly every day");
+       // System.out.println(options);
+
+        // Ensure questions, options, and selectedOptionsList have the same size
+        int Size = questions.size();
+
+        List<AnswersResponse> answersResponses = new ArrayList<>();
+
+       for(int i=0 ; i<Size ;i++){
+           AnswersResponse response = AnswersResponse.builder()
+                   .id(i+1)
+                   .Question(questions.get(i))
+                   .Options(options)
+                   .selected_option(selectedOptionsList.get(i))
+                   .build();
+
+           answersResponses.add(response);
+
+       }
+        return  answersResponses;
+
+    }
+
+    public List<UserResponse> getAllQuizResponse(Integer userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<QuizResults> quizResults = quizResultRepository.findByUid(user);
+
+        List<UserResponse> answer = new ArrayList<>();
+
+        for (QuizResults quizResult : quizResults) {
+            UserResponse response = UserResponse.builder()
+                    .id(quizResult.getId())
+                    .Remark(quizResult.getRemark())
+                    .date(quizResult.getDate())
+                    .build();
+            answer.add(response);
+        }
+        return answer;
+    }
 }

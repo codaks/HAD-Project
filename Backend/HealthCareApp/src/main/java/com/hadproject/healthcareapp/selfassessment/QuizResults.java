@@ -15,14 +15,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "QuizResults")
 public class QuizResults {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "uid")
-    private User u_id;
+    private User uid;
 
     @Column(nullable = false)
     private String Remark;
@@ -34,8 +35,6 @@ public class QuizResults {
     @JsonIgnore
     @Column(nullable = false)
     private String date;
-
-
 
     @JsonIgnore
     @Column(nullable = false)

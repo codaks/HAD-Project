@@ -15,6 +15,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class QansService {
+
     private final QuestionRepository questionRepository;
     private final AnswersRepository answersRepository;
     private final UserRepository userRepository;

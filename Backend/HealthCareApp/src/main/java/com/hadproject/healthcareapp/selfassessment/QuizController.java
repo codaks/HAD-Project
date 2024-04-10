@@ -1,6 +1,7 @@
 package com.hadproject.healthcareapp.selfassessment;
 
 import com.hadproject.healthcareapp.Header.Header;
+import com.hadproject.healthcareapp.user.User;
 import lombok.RequiredArgsConstructor;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/selfAssisgment")
 @RequiredArgsConstructor
-@ControllerAdvice
+
 public class QuizController {
 
     private final QuizService service;
@@ -44,12 +45,20 @@ public ResponseEntity<Map<String, Object>> evaluate(@RequestBody  EvaluateRespon
     return ResponseEntity.ok(result);
 }
 
-//    @GetMapping("/getAllQuizResults/{userId}")
-//    public ResponseEntity<List<AnswersResponse>> getAllQuizResponse(@PathVariable Integer userId){
-//        List<AnswersResponse> response = service.getAllQuizResponse(userId);
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/getAllQuizResults/{u_id}")
+    public ResponseEntity<List<UserResponse>> getAllQuizResponse(@PathVariable Integer u_id){
+        List<UserResponse> response = service.getAllQuizResponse(u_id);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getQuizResults/{quizId}")
+    public ResponseEntity<List<AnswersResponse>> getQuizResponse(@PathVariable Integer quizId) {
+        List<AnswersResponse> response = service.getQuizResponse(quizId);
+        return ResponseEntity.ok(response);
+    }
+
 }
+
 
 
 
