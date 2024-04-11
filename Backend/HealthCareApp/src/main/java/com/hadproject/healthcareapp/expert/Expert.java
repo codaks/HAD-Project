@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name= "expert")
-public class Expert {
+public class
+
+Expert {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -30,6 +32,5 @@ public class Expert {
     private String Specialization;
     @Column(nullable = false)
     private String exprience;
-
 
 }
