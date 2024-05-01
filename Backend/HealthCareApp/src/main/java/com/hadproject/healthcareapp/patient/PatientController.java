@@ -10,17 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping( "api/v1/patient")
 public class PatientController {
-//    @Autowired
-//    private final PatientService patientService;
-//
-//    public PatientController(PatientService patientService) {
-//        this.patientService = patientService;
-//    }
-//
-//    @PostMapping("/send-appointment-request")
-//    public String sendAppointmentRequest(@RequestBody AppointmentRequest appointmentRequest) {
-//        return patientService.sendAppointmentRequest(appointmentRequest);
-//    }
 
 
 }
